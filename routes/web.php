@@ -23,3 +23,12 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/', [MainController::class, 'index'])->name('main');
+
+Route::middleware(['role:admin'])->prefix('admin')->group(function () {
+
+    Route::get('/', [App\Http\Controllers\Admin\MainController::class, 'index'])->name('mainAdmin');
+
+    Route::get('fullcalendar', [App\Http\Controllers\Admin\FullCalendarController::class, 'index'])->name('showCalendar');
+
+    Route::get('fullcalendar/show-events', [App\Http\Controllers\Admin\FullCalendarController::class, 'showEvents']);
+});
