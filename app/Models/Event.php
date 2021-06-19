@@ -10,6 +10,11 @@ class Event extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title','start','end','backgroundColor','borderColor','allDay'
+        'title','start','end','status','allDay'
     ];
+
+    public function setAttr($name, $value)
+    {
+        $this->attributes[$name] = $value;
+    }
 }

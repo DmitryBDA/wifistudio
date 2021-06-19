@@ -31,4 +31,12 @@ Route::middleware(['role:admin'])->prefix('admin')->group(function () {
     Route::get('fullcalendar', [App\Http\Controllers\Admin\FullCalendarController::class, 'index'])->name('showCalendar');
 
     Route::get('fullcalendar/show-events', [App\Http\Controllers\Admin\FullCalendarController::class, 'showEvents']);
+
+    Route::post('fullcalendar/create',[App\Http\Controllers\Admin\FullCalendarController::class,'create']);
+
+    Route::post('/fullcalendar/update',[App\Http\Controllers\Admin\FullCalendarController::class,'update']);
+
+    Route::post('/fullcalendar/action-with-events',[App\Http\Controllers\Admin\FullCalendarController::class,'actionWithEvents']);
+
+
 });

@@ -70,14 +70,14 @@
 
             new Draggable(containerEl, {
                 itemSelector: '.external-event',
-                eventData: function(eventEl) {
+             /*   eventData: function(eventEl) {
                     return {
                         title: eventEl.innerText,
                         backgroundColor: window.getComputedStyle( eventEl ,null).getPropertyValue('background-color'),
                         borderColor: window.getComputedStyle( eventEl ,null).getPropertyValue('background-color'),
                         textColor: window.getComputedStyle( eventEl ,null).getPropertyValue('color'),
                     };
-                }
+                }*/
             });
 
             var calendar = new Calendar(calendarEl, {
@@ -86,40 +86,150 @@
                     center: 'title',
                     right : 'dayGridMonth,timeGridWeek,timeGridDay'
                 },
+                firstDay: 1,
+
                 themeSystem: 'bootstrap',
                 events:"/admin/fullcalendar/show-events",
                 editable  : true,
                 droppable : true, // this allows things to be dropped onto the calendar !!!
                 drop      : function(info) {
 
-                    console.log(info)
-                    var start = new Date(info.dateStr);
+                    var key = $(info.draggedEl).css("background-color");
+                    var arrColorEvents = new Map([
+                        ['rgb(186, 139, 0)', '2'],
+                        ['rgb(40, 167, 69)', '1'],
+                        ['rgb(167, 29, 42)', '3'],
+                    ]);
 
-                    //var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
+                    if(arrColorEvents.get(key)){
+                        var status = arrColorEvents.get(key);
+                    } else {
+                        var status = info.draggedEl.classList[1];
+                    }
+
+                    var start = new Date(info.dateStr);
+                    start = moment(start).format("Y-MM-DD");
+                    var end = new Date(info.dateStr);
+                    end = moment(end).format("Y-MM-DD");
+
+                    var allDay = info.allDay ? 1 : 0;
+                    var title = info.draggedEl.innerText;
 
 
                     // is the "remove after drop" checkbox checked?
                     if (checkbox.checked) {
                         // if so, remove the element from the "Draggable Events" list
-                        info.draggedEl.parentNode.removeChild(info.draggedEl);
+                        //info.draggedEl.parentNode.removeChild(info.draggedEl);
                     }
 
-                  /*  $.ajax({
-                        url: "/fullcalendar/create",
-                        data: 'title=' + title + '&start=' + start + '&end=' + end,
+                    $.ajax({
+                        url: "/admin/fullcalendar/create",
+                        data: 'title=' + title + '&start=' + start + '&end=' + end + '&allDay=' + allDay + '&status=' + status,
                         type: "POST",
                         success: function (data) {
+                            calendar.refetchEvents()
+                        }
+                    });
+                },
+                eventDrop: function (event) {
+
+                    var start = moment(event.event._instance.range.start).format("Y-MM-DD");
+                    var end = moment(event.event._instance.range.end).format("Y-MM-DD");
+
+                    $.ajax({
+                        url: '/admin/fullcalendar/update',
+                        data: {
+                            title: event.event._def.title,
+                            start: start,
+                            end: end,
+                            id: event.oldEvent._def.publicId,
+                        },
+                        type: "POST",
+                        success: function (response) {
 
                         }
-                    });*/
+                    });
+                },
+                eventClick: function (event) {
+
+                    $('#btn-from-chose').click();
+
+                    $('input[type="submit"]').attr('data-idEvent', event.event._def.publicId)
+
+                    var titleEvent =  event.event._def.title;
+
+                    $('#time_record').text(titleEvent)
+                    $('#for_id_event').attr('data-idevent', event.event._def.publicId)
+
                 }
             });
+
+            $('#confirm').click(function(e) {
+                // Stop form from sending request to server
+                e.preventDefault();
+
+                var idEent = $(this).attr('data-idEvent');
+
+                $.ajax({
+                    type: "POST",
+                    url: '/admin/fullcalendar/action-with-events',
+                    data: {
+                        id: idEent,
+                        type: 'confirm'
+                    },
+                    success: function (response) {
+                        calendar.refetchEvents()
+                        $('.close').click();
+                    }
+                });
+            })
+
+            $('#close').click(function(e) {
+                // Stop form from sending request to server
+                e.preventDefault();
+
+                var idEent = $(this).attr('data-idEvent');
+
+                $.ajax({
+                    type: "POST",
+                    url: '/admin/fullcalendar/action-with-events',
+                    data: {
+                        id: idEent,
+                        type: 'close'
+                    },
+                    success: function (response) {
+
+                        calendar.refetchEvents()
+                        $('.close').click();
+                    }
+                });
+            })
+
+            $('#delete').click(function(e) {
+                // Stop form from sending request to server
+                e.preventDefault();
+
+                var idEent = $(this).attr('data-idEvent');
+
+                $.ajax({
+                    type: "POST",
+                    url: '/admin/fullcalendar/action-with-events',
+                    data: {
+                        id: idEent,
+                        type: 'delete'
+                    },
+                    success: function (response) {
+                        calendar.refetchEvents()
+                        $('.close').click();
+                    }
+                });
+            })
 
             calendar.render();
             // $('#calendar').fullCalendar()
 
             /* ADDING EVENTS */
-            var currColor = '#3c8dbc' //Red by default
+            var currColor = '#28a745' //Red by default
             // Color chooser button
             $('#color-chooser > li > a').click(function (e) {
                 e.preventDefault()
@@ -196,11 +306,15 @@
                                 <div class="card-body">
                                     <!-- the events -->
                                     <div id="external-events">
-                                        <div class="external-event bg-success">Lunch</div>
-                                        <div class="external-event bg-warning">Go home</div>
+                                        <div class="external-event bg-success">9:00</div>
+                                        <div class="external-event bg-success">11:00</div>
+                                        <div class="external-event bg-success">14:00</div>
+                                        <div class="external-event bg-success">18:00</div>
+                                        <div class="external-event bg-success">20:00</div>
+                                     {{--   <div class="external-event bg-warning">Go home</div>
                                         <div class="external-event bg-info">Do homework</div>
                                         <div class="external-event bg-primary">Work on UI design</div>
-                                        <div class="external-event bg-danger">Sleep tight</div>
+                                        <div class="external-event bg-danger">Sleep tight</div>--}}
                                         <div class="checkbox">
                                             <label for="drop-remove">
                                                 <input type="checkbox" id="drop-remove">
@@ -216,22 +330,26 @@
                                 <div class="card-header">
                                     <h3 class="card-title">Create Event</h3>
                                 </div>
+
+
                                 <div class="card-body">
                                     <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
                                         <ul class="fc-color-picker" id="color-chooser">
-                                            <li><a class="text-primary" href="#"><i class="fas fa-square"></i></a></li>
-                                            <li><a class="text-warning" href="#"><i class="fas fa-square"></i></a></li>
                                             <li><a class="text-success" href="#"><i class="fas fa-square"></i></a></li>
                                             <li><a class="text-danger" href="#"><i class="fas fa-square"></i></a></li>
-                                            <li><a class="text-muted" href="#"><i class="fas fa-square"></i></a></li>
+                                            <li><a class="text-warning" href="#"><i class="fas fa-square"></i></a></li>
+                                       {{--     <li><a class="text-warning" href="#"><i class="fas fa-square"></i></a></li>
+                                            <li><a class="text-primary" href="#"><i class="fas fa-square"></i></a></li>
+
+                                            <li><a class="text-muted" href="#"><i class="fas fa-square"></i></a></li>--}}
                                         </ul>
                                     </div>
                                     <!-- /btn-group -->
                                     <div class="input-group">
-                                        <input id="new-event" type="text" class="form-control" placeholder="Event Title">
+                                        <input id="new-event" type="time" class="form-control" placeholder="Event Title">
 
                                         <div class="input-group-append">
-                                            <button id="add-new-event" type="button" class="btn btn-primary">Add</button>
+                                            <button id="add-new-event" type="button" class="btn btn-primary" style="background-color: rgb(25, 105, 44); border-color: rgb(25, 105, 44);">Add</button>
                                         </div>
                                         <!-- /btn-group -->
                                     </div>
@@ -256,6 +374,47 @@
                 <!-- /.row -->
             </div><!-- /.container-fluid -->
         </section>
+
+        <div class="modal fade" id="modal-info">
+            <div class="modal-dialog">
+                <div class="modal-content bg-info">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Выбор действия</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="choise" class="form-horizontal">
+                            <!-- /.card-body -->
+                            <div class="modal-footer justify-content-between">
+                                <label data-idevent="" id="for_id_event" for="">Время <span id="time_record"></span></label>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <input data-idEvent=""
+                                       id="confirm"
+                                       type="submit" name="confirm" class="btn btn-outline-light" value="Подтвердить">
+                                <input data-idEvent=""
+                                       id="close"
+                                       type="submit" name="close" class="btn btn-outline-light" value="Отменить">
+                                <input data-idEvent=""
+                                       id="delete"
+                                       type="submit" name="delete" class="btn btn-outline-light" value="Удалить">
+                            </div>
+
+                            <!-- /.card-footer -->
+                        </form>
+                    </div>
+
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+
+        <button style="display: none" id="btn-from-chose" type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-info">
+            Launch Info Modal
+        </button>
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
