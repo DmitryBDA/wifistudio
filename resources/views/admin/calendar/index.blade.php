@@ -92,6 +92,59 @@
                 events:"/admin/fullcalendar/show-events",
                 editable  : true,
                 droppable : true, // this allows things to be dropped onto the calendar !!!
+                selectable: true,
+                select:function (info) {
+                    var title = prompt('Event Title:');
+                    if (title) {
+                        console.log(info)
+                        var start = new Date(info.start);
+                        start = moment(start).format("Y-MM-DD");
+                        var end = new Date(info.end);
+                        end = moment(end).format("Y-MM-DD");
+                        var allDay = info.allDay ? 1 : 0;
+                        var status = 1;
+
+                        console.log(start)
+                        console.log(end)
+                        console.log(allDay)
+
+                        $.ajax({
+                            url: "/admin/fullcalendar/create",
+                            data: 'title=' + title + '&start=' + start + '&end=' + end + '&allDay=' + allDay + '&status=' + status,
+                            type: "POST",
+                            success: function (data) {
+                                calendar.refetchEvents()
+                            }
+                        });
+
+                       /* $.ajax({
+                            url: SITEURL + "/fullcalendarAjax",
+                            data: {
+                                title: title,
+                                start: start,
+                                end: end,
+                                type: 'add'
+                            },
+                            type: "POST",
+                            success: function (data) {
+                                displayMessage("Event Created Successfully");
+
+                                calendar.fullCalendar('renderEvent',
+                                    {
+                                        id: data.id,
+                                        title: title,
+                                        start: start,
+                                        end: end,
+                                        backgroundColor: '#28a745',
+                                        allDay: allDay
+                                    },true);
+
+                                calendar.fullCalendar('unselect');
+                            }
+                        });*/
+                    }
+
+                },
                 drop      : function(info) {
 
                     var key = $(info.draggedEl).css("background-color");
@@ -152,6 +205,8 @@
                 },
                 eventClick: function (event) {
 
+                  /*  var eventStatus = event.event._def.extendedProps.status;
+
                     $('#btn-from-chose').click();
 
                     $('input[type="submit"]').attr('data-idEvent', event.event._def.publicId)
@@ -160,65 +215,122 @@
 
                     $('#time_record').text(titleEvent)
                     $('#for_id_event').attr('data-idevent', event.event._def.publicId)
+                    $('#for_id_event').attr('data-event-status', eventStatus)
+*/
+                    $.ajax({
+                        url: "/admin/fullcalendar/showModalAction",
+                        type: "GET",
+                        data: {
+                            idEvent:event.event._def.publicId
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: (data) => {
+
+                            $('#choise').html(data);
+
+                            $("#phone").mask("8(999)999-99-99");
+
+                            $('#confirm').click(function(e) {
+                                // Stop form from sending request to server
+                                e.preventDefault();
+
+                                /*  const name = prompt('Укажите имя');
+                                  const phone = prompt('Укажите телефон');*/
+
+                                var idEent = $(this).attr('data-idEvent');
+                                var eventStatus =  $('#for_id_event').attr('data-event-status');
+
+                                $.ajax({
+                                    type: "POST",
+                                    url: '/admin/fullcalendar/action-with-events',
+                                    data: {
+                                        id: idEent,
+                                        type: 'confirm'
+                                    },
+                                    success: function (response) {
+                                        calendar.refetchEvents()
+                                        $('.close').click();
+                                    }
+                                });
+                            })
+
+                            $('#close').click(function(e) {
+                                // Stop form from sending request to server
+                                e.preventDefault();
+
+                                var idEent = $(this).attr('data-idEvent');
+
+                                $.ajax({
+                                    type: "POST",
+                                    url: '/admin/fullcalendar/action-with-events',
+                                    data: {
+                                        id: idEent,
+                                        type: 'close'
+                                    },
+                                    success: function (response) {
+
+                                        calendar.refetchEvents()
+                                        $('.close').click();
+                                    }
+                                });
+                            })
+
+                            $('#delete').click(function(e) {
+                                // Stop form from sending request to server
+                                e.preventDefault();
+
+                                var idEent = $(this).attr('data-idEvent');
+
+                                $.ajax({
+                                    type: "POST",
+                                    url: '/admin/fullcalendar/action-with-events',
+                                    data: {
+                                        id: idEent,
+                                        type: 'delete'
+                                    },
+                                    success: function (response) {
+                                        calendar.refetchEvents()
+                                        $('.close').click();
+                                    }
+                                });
+                            })
+
+                            $('#btn-from-chose').click();
+
+                        }
+
+                    })
 
                 }
             });
 
-            $('#confirm').click(function(e) {
+
+            $('#choise').on('submit', function (e){
                 // Stop form from sending request to server
                 e.preventDefault();
 
-                var idEent = $(this).attr('data-idEvent');
+                /*  const name = prompt('Укажите имя');
+                  const phone = prompt('Укажите телефон');*/
+
+                var idEent = $('#for_id_event').attr('data-idEvent');
+                var eventStatus =  $('#for_id_event').attr('data-event-status');
+
+                var dataForm = $('#choise').serializeArray();
+
+
 
                 $.ajax({
                     type: "POST",
                     url: '/admin/fullcalendar/action-with-events',
                     data: {
                         id: idEent,
-                        type: 'confirm'
-                    },
-                    success: function (response) {
-                        calendar.refetchEvents()
-                        $('.close').click();
-                    }
-                });
-            })
-
-            $('#close').click(function(e) {
-                // Stop form from sending request to server
-                e.preventDefault();
-
-                var idEent = $(this).attr('data-idEvent');
-
-                $.ajax({
-                    type: "POST",
-                    url: '/admin/fullcalendar/action-with-events',
-                    data: {
-                        id: idEent,
-                        type: 'close'
+                        type: 'record',
+                        dataForm:dataForm,
                     },
                     success: function (response) {
 
-                        calendar.refetchEvents()
-                        $('.close').click();
-                    }
-                });
-            })
-
-            $('#delete').click(function(e) {
-                // Stop form from sending request to server
-                e.preventDefault();
-
-                var idEent = $(this).attr('data-idEvent');
-
-                $.ajax({
-                    type: "POST",
-                    url: '/admin/fullcalendar/action-with-events',
-                    data: {
-                        id: idEent,
-                        type: 'delete'
-                    },
-                    success: function (response) {
                         calendar.refetchEvents()
                         $('.close').click();
                     }
@@ -266,6 +378,8 @@
                 // Remove event from text input
                 $('#new-event').val('')
             })
+
+
         })
     </script>
 
@@ -336,8 +450,8 @@
                                     <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
                                         <ul class="fc-color-picker" id="color-chooser">
                                             <li><a class="text-success" href="#"><i class="fas fa-square"></i></a></li>
-                                            <li><a class="text-danger" href="#"><i class="fas fa-square"></i></a></li>
-                                            <li><a class="text-warning" href="#"><i class="fas fa-square"></i></a></li>
+                                          {{--  <li><a class="text-danger" href="#"><i class="fas fa-square"></i></a></li>
+                                            <li><a class="text-warning" href="#"><i class="fas fa-square"></i></a></li>--}}
                                        {{--     <li><a class="text-warning" href="#"><i class="fas fa-square"></i></a></li>
                                             <li><a class="text-primary" href="#"><i class="fas fa-square"></i></a></li>
 
@@ -375,7 +489,7 @@
             </div><!-- /.container-fluid -->
         </section>
 
-        <div class="modal fade" id="modal-info">
+      {{--  <div class="modal fade" id="modal-info">
             <div class="modal-dialog">
                 <div class="modal-content bg-info">
                     <div class="modal-header">
@@ -388,7 +502,7 @@
                         <form id="choise" class="form-horizontal">
                             <!-- /.card-body -->
                             <div class="modal-footer justify-content-between">
-                                <label data-idevent="" id="for_id_event" for="">Время <span id="time_record"></span></label>
+                                <label data-idevent="" id="for_id_event" data-event-status="" for="">Время <span id="time_record"></span></label>
                             </div>
                             <div class="modal-footer justify-content-between">
                                 <input data-idEvent=""
@@ -401,6 +515,30 @@
                                        id="delete"
                                        type="submit" name="delete" class="btn btn-outline-light" value="Удалить">
                             </div>
+
+                            <!-- /.card-footer -->
+                        </form>
+                    </div>
+
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>--}}
+
+        <div class="modal fade" id="modal-info">
+            <div class="modal-dialog">
+                <div class="modal-content bg-info">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Выбор действия</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="choise" class="form-horizontal">
+
+                            @include('admin.calendar.ajax-elem.actionEvents')
 
                             <!-- /.card-footer -->
                         </form>

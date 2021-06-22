@@ -10,11 +10,16 @@ class Event extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title','start','end','status','allDay'
+        'title','start','end','status','allDay','user_id'
     ];
 
     public function setAttr($name, $value)
     {
         $this->attributes[$name] = $value;
+    }
+
+    public function user()
+    {
+        return $this->hasOne(UserEvent::class, 'id','user_id');
     }
 }

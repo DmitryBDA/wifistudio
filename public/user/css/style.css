@@ -6,9 +6,9 @@
     Author: BootExperts
     Author URI: http://bootexperts.com
     Version: 1.0
-  
------------------------------------------------------------------------------------ 
-    
+
+-----------------------------------------------------------------------------------
+
     CSS INDEX
     ===================
     1. Theme Default CSS (body, link color, section etc)
@@ -27,7 +27,7 @@
 	14.single blog css
 	15.home-2 css
 	16.home-3 css
-	17.home-4 css 
+	17.home-4 css
 -----------------------------------------------------------------------------------*/
 /*----------------------------------------*/
 /*  1.  Theme default CSS
@@ -1850,6 +1850,13 @@ home-2 area css
     height: 370px;
 }
 .home-2 #name {
+    background: #1681b5 none repeat scroll 0 0;
+    border: 1px solid #1681b5;
+    color: #fff;
+    height: 46px;
+    padding-left: 56px;
+}
+.home-2 #phone {
     background: #1681b5 none repeat scroll 0 0;
     border: 1px solid #1681b5;
     color: #fff;

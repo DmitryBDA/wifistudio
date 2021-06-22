@@ -269,6 +269,8 @@
 <script src="/adm/dist/js/adminlte.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="/adm/dist/js/demo.js"></script>
+<script src="/adm/jquery.maskedinput.js"></script>
+
 
 
 <script src="/adm/admin.js"></script>

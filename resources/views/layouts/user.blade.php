@@ -9,6 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -71,7 +72,7 @@
 <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
 <!--Start nav  area -->
-<div class="nav_area"  id="sticker">
+{{--<div class="nav_area"  id="sticker">
     <div class="container">
         <div class="row">
             <!--logo area-->
@@ -103,59 +104,12 @@
             <!--end nav area-->
         </div>
     </div>
-</div>
+</div>--}}
 <!--end header  area -->
 
 @yield('content')
 
 
-<div class="footer_area " id="contact">
-    <div class="container">
-        <div class="row">
-            <!--section title-->
-            <div class="col-md-12">
-                <div class="section_title service_color">
-                    <h2 class="title title2">Contact with US</h2>
-                    <span class="title-border"></span>
-                </div>
-            </div>
-            <!--end section title-->
-        </div>
-        <div class="row">
-
-            <div class="col-md-6">
-                <div class="map">
-                    <!-- Start contact-map -->
-                    <div class="contact-map">
-                        <div id="googleMap"></div>
-                    </div>
-                    <!-- End contact-map -->
-                </div>
-            </div>
-            <div class="col-md-6">
-                <form action="mail.php" method="post">
-                    <div class="contract_us">
-                        <div class="inputt input_change">
-                            <span class="message_icon"><i class="fa fa-user"></i></span>
-                            <input type="text" name="name" class="form-control" id="name" placeholder="Name" required>
-                        </div>
-                        <div class="inputt input_change">
-                            <span class="message_icon"><i class="fa fa-envelope-o"></i></span>
-                            <input type="email" name="email" class="form-control" id="email" placeholder="Email" required>
-                        </div>
-                        <div class="inputt">
-                            <span class="message_icon"><i class="fa fa-external-link"></i></span>
-                            <textarea class="form-control" name="message" rows="4" id="mes" placeholder="Message"></textarea>
-                        </div>
-                        <div class="sunmite_button">
-                            <button type="submit" name="ok">send message</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="footer_top_area">
     <div class="container">
         <div class="row">
@@ -220,6 +174,7 @@
 <script src="/user/js/main.js"></script>
 <!-- Google Map js -->
 <script src="https://maps.googleapis.com/maps/api/js"></script>
+<script src="/adm/jquery.maskedinput.js"></script>
 <script>
     function initialize() {
         var mapOptions = {
@@ -243,6 +198,8 @@
 
     google.maps.event.addDomListener(window, 'load', initialize);
 </script>
+
+
 @yield('custom_js')
 </body>
 </html>

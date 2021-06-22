@@ -9,15 +9,15 @@ $('.mabile_menu').click(function() {
 	 TOP Menu Stick
 	--------------------- */
 		var s = $("#sticker");
-		var pos = s.position();					   
-		$(window).scroll(function() {
+		var pos = s.position();
+	/*	$(window).scroll(function() {
 			var windowpos = $(window).scrollTop();
 			if (windowpos > pos.top) {
 			s.addClass("stick");
 			} else {
-				s.removeClass("stick");	
+				s.removeClass("stick");
 			}
-		});					
+		});	*/
 	//one page selection page
 	$('.navid').onePageNav({
 		currentClass: 'current',
@@ -35,21 +35,21 @@ $('.mabile_menu').click(function() {
 		scrollChange: function(jQuerycurrentListItem) {
 			//I get fired when you enter a section and I pass the list item of the section
 		}
-	});	
+	});
 	/*---------------------
 	gallery_owlt-list
 	--------------------- */
 	  $(".gallery_owl").owlCarousel({
-	 
-			autoPlay: false, //Set AutoPlay to seconds here					 
+
+			autoPlay: false, //Set AutoPlay to seconds here
 			slideSpeed:600,
 			rewindNav : false,
 			items : 1,
 			itemsDesktop : [1169,1],
 			itemsTablet: [991,1],
 			itemsTabletSmall: [767,1],
-			itemsMobile : [320,1],							  
-			pagination : false,				 
+			itemsMobile : [320,1],
+			pagination : false,
 			navigation : true,
 			navigationText : ["<i class='fa fa-angle-left'></i>","<i class='fa fa-angle-right'></i>"]
 	  });
@@ -57,52 +57,52 @@ $('.mabile_menu').click(function() {
 		team_own-list
 		--------------------- */
 	  $(".team_own").owlCarousel({
-	 
-			autoPlay: false, //Set AutoPlay to seconds here					 
+
+			autoPlay: false, //Set AutoPlay to seconds here
 			slideSpeed:600,
 			rewindNav : false,
 			items : 4,
 			itemsDesktop : [1169,3],
 			itemsTablet: [991,2],
 			itemsTabletSmall: [767,1],
-			itemsMobile : [320,1],							  
-			pagination : false,				 
+			itemsMobile : [320,1],
+			pagination : false,
 			navigation : true,
 			navigationText : ["<i class='fa fa-angle-left'></i>","<i class='fa fa-angle-right'></i>"]
 	  });
-	  
+
 	  	/*---------------------
 	    team_own2-list
 		--------------------- */
 	  $(".team_own2").owlCarousel({
-	 
-			autoPlay: false, //Set AutoPlay to seconds here					 
+
+			autoPlay: false, //Set AutoPlay to seconds here
 			slideSpeed:600,
 			rewindNav : false,
 			items : 3,
 			itemsDesktop : [1169,3],
 			itemsTablet: [991,2],
 			itemsTabletSmall: [767,1],
-			itemsMobile : [320,1],							  
-			pagination : false,				 
+			itemsMobile : [320,1],
+			pagination : false,
 			navigation : true,
 			navigationText : ["<i class='fa fa-angle-left'></i>","<i class='fa fa-angle-right'></i>"]
 	  });
-	  
+
     /*---------------------
 	newp_carsol-list
 	--------------------- */
 	  $(".newp_carsol").owlCarousel({
-	 
-			autoPlay: false, //Set AutoPlay to seconds here					 
+
+			autoPlay: false, //Set AutoPlay to seconds here
 			slideSpeed:600,
 			rewindNav : false,
 			items : 1,
 			itemsDesktop : [1169,1],
 			itemsTablet: [991,1],
 			itemsTabletSmall: [767,1],
-			itemsMobile : [320,1],							  
-			pagination : false,				 
+			itemsMobile : [320,1],
+			pagination : false,
 			navigation : false,
 			navigationText : ["<i class='fa fa-angle-left'></i>","<i class='fa fa-angle-right'></i>"]
 	  });
@@ -110,73 +110,73 @@ $('.mabile_menu').click(function() {
 	 blog_carsol-list
 	--------------------- */
 	  $(".blog_carsol").owlCarousel({
-	 
-			autoPlay: false, //Set AutoPlay to seconds here					 
+
+			autoPlay: false, //Set AutoPlay to seconds here
 			slideSpeed:600,
-			rewindNav : false,			
+			rewindNav : false,
 			items : 2,
 			itemsDesktopSmall : [1169,2],
 			itemsTablet: [991,1],
 			itemsTabletSmall: [767,1],
-			itemsMobile : [320,1],							  
-			pagination : false,				 
+			itemsMobile : [320,1],
+			pagination : false,
 			navigation : false,
 			navigationText : ["<i class='fa fa-angle-left'></i>","<i class='fa fa-angle-right'></i>"]
-	  });	  
+	  });
 	  /*---------------------
 	 single_blog_owl-list
 	--------------------- */
-	  $(".single_blog_owl").owlCarousel({	 
-			autoPlay: false, //Set AutoPlay to seconds here					 
+	  $(".single_blog_owl").owlCarousel({
+			autoPlay: false, //Set AutoPlay to seconds here
 			slideSpeed:600,
-			rewindNav : false,			
+			rewindNav : false,
 			items : 1,
 			itemsDesktopSmall : [1169,1],
 			itemsTablet: [991,1],
 			itemsTabletSmall: [767,1],
-			itemsMobile : [320,1],							  
-			pagination : false,				 
+			itemsMobile : [320,1],
+			pagination : false,
 			navigation : true,
 			navigationText : ["<i class='fa fa-angle-left'></i>","<i class='fa fa-angle-right'></i>"]
 	  });
     /*---------------------
 	 client_own-list
 	--------------------- */
-	  $(".client_own").owlCarousel({	 
-			autoPlay: false, //Set AutoPlay to seconds here					 
+	  $(".client_own").owlCarousel({
+			autoPlay: false, //Set AutoPlay to seconds here
 			slideSpeed:600,
-			rewindNav : false,			
+			rewindNav : false,
 			items : 1,
 			itemsDesktop : [1169,1],
 			itemsTablet: [991,1],
 			itemsTabletSmall: [767,1],
-			itemsMobile : [479,1],							  
-			pagination : false,				 
+			itemsMobile : [479,1],
+			pagination : false,
 			navigation : true,
 			navigationText : ["<i class='fa fa-angle-left'></i>","<i class='fa fa-angle-right'></i>"]
-	  });		  
+	  });
 
 	/*---------------------
-	 collapse 
-	--------------------- */ 
+	 collapse
+	--------------------- */
 	$('.panel_heading a').on('click', function(){
 		$('.panel_heading a').removeClass('active');
 		$(this).addClass('active');
 	})
 	/*---------------------
 	counterUp
-	--------------------- */	
+	--------------------- */
 	$('.number').counterUp({
 		delay: 10,
 		time: 1000
 	});
-	/*----- maxitup -----*/		
+	/*----- maxitup -----*/
 	$(function(){
 	$('.project_maxitup').mixItUp();
 	});
 	/* default settings */
     $('.venobox').venobox();
-	/*----- main slider -----*/	
+	/*----- main slider -----*/
 	$('#mainSlider').nivoSlider({
 		directionNav: true,
 		animSpeed: 500,
@@ -188,4 +188,4 @@ $('.mabile_menu').click(function() {
 		nextText: '<i class="fa fa-angle-right nivo-next-icon"></i>'
 	});
 
-})(jQuery);    
+})(jQuery);

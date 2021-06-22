@@ -5,12 +5,17 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Event;
+use App\Models\UserEvent;
 
 class FullCalendarController extends Controller
 {
     public function index()
     {
-        return view('admin.calendar.index');
+
+        $event = new Event;
+        //$event = Event::with('user')->find(7);
+
+        return view('admin.calendar.index', compact('event'));
     }
 
     public function showEvents()
@@ -69,10 +74,56 @@ class FullCalendarController extends Controller
 
         switch ($request->type) {
 
+            case 'record':
+                $name = $request->dataForm[0]['value'];
+                $phone = $request->dataForm[1]['value'];
+
+                if(!empty($name) and !empty($phone)){
+                    $insertArr = [
+                        'name' => $name,
+                        'phone' => $phone,
+                    ];
+                    $user = UserEvent::select('id')->where('phone', $phone)->first();
+
+
+                    if(!empty($user)) {
+
+                        $dataUpdate = [
+                            'status' => 3,
+                            'user_id' => $user->id,
+                        ];
+
+                    } else {
+                        $insertArr = [
+                            'name' => $name,
+                            'phone' => $phone,
+                        ];
+                        $newUser = UserEvent::create($insertArr);
+
+                        $dataUpdate = [
+                            'status' => 3,
+                            'user_id' => $newUser->id,
+                        ];
+                    }
+                } else {
+                    $dataUpdate = [
+                        'status' => 3,
+                    ];
+                }
+
+                $event = Event::find($request->id)->update($dataUpdate);
+
+                return response()->json($name);
+                break;
+
+
             case 'confirm':
-                $event = Event::find($request->id)->update([
-                    'status' => 3
-                ]);
+
+                $dataUpdate = [
+                    'status' => 3,
+                ];
+
+                $event = Event::find($request->id)->update($dataUpdate);
 
                 return response()->json($event);
                 break;
@@ -81,6 +132,7 @@ class FullCalendarController extends Controller
             case 'close':
                 $event = Event::find($request->id)->update([
                     'status' => 1,
+                    'user_id' => null,
                 ]);
 
                 return response()->json($event);
@@ -97,6 +149,17 @@ class FullCalendarController extends Controller
                 break;
         }
     }
+
+    public function showModalAction(Request $request){
+
+        $event = Event::with('user')->find($request->idEvent);
+
+        if($request->ajax()){
+            return view('admin.calendar.ajax-elem.actionEvents', compact('event'))->render();
+        }
+    }
+
+
 
 
 }
