@@ -12,10 +12,12 @@ class FullCalendarController extends Controller
     public function index()
     {
 
+        $eventList = Event::where('status', '!=', 1)->with('user')->orderBy('start', 'asc')->get();
+
         $event = new Event;
         //$event = Event::with('user')->find(7);
 
-        return view('admin.calendar.index', compact('event'));
+        return view('admin.calendar.index', compact('event', 'eventList'));
     }
 
     public function showEvents()
@@ -63,6 +65,15 @@ class FullCalendarController extends Controller
     {
         $where = array('id' => $request->id);
         $updateArr = ['title' => $request->title,'start' => $request->start, 'end' => $request->end];
+        $event  = Event::where($where)->update($updateArr);
+
+        return response()->json($event);
+    }
+
+    public function changeTime(Request $request)
+    {
+        $where = array('id' => $request->id);
+        $updateArr = ['title' => $request->title];
         $event  = Event::where($where)->update($updateArr);
 
         return response()->json($event);

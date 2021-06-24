@@ -14,7 +14,7 @@
 
     <script src="/adm/plugins/moment/moment.min.js"></script>
     <script src="/adm/plugins/fullcalendar/main.js"></script>
-
+    <script src="/adm/plugins/fullcalendar/locales-all.min.js"></script>
     <script>
         $(function () {
 
@@ -87,7 +87,7 @@
                     right : 'dayGridMonth,timeGridWeek,timeGridDay'
                 },
                 firstDay: 1,
-
+                locale: 'ru',
                 themeSystem: 'bootstrap',
                 events:"/admin/fullcalendar/show-events",
                 editable  : true,
@@ -229,6 +229,23 @@
                         success: (data) => {
 
                             $('#choise').html(data);
+
+                            $('#time_record').blur(function (){
+                                var newTitle = $(this).val();
+                                var idEvent = $(this).data('idevent')
+
+                                $.ajax({
+                                    url: '/admin/fullcalendar/change-time',
+                                    data: {
+                                        title: newTitle,
+                                        id: idEvent,
+                                    },
+                                    type: "POST",
+                                    success: function (response) {
+                                        calendar.refetchEvents()
+                                    }
+                                });
+                            })
 
                             $("#phone").mask("8(999)999-99-99");
 
@@ -460,7 +477,7 @@
                                     </div>
                                     <!-- /btn-group -->
                                     <div class="input-group">
-                                        <input id="new-event" type="time" class="form-control" placeholder="Event Title">
+                                        <input id="new-event" type="text" class="form-control" placeholder="Event Title">
 
                                         <div class="input-group-append">
                                             <button id="add-new-event" type="button" class="btn btn-primary" style="background-color: rgb(25, 105, 44); border-color: rgb(25, 105, 44);">Add</button>
@@ -483,48 +500,56 @@
                         </div>
                         <!-- /.card -->
                     </div>
+                    <div class="col-md-12">
+
+                        <div class="card card-info collapsed-card">
+                            <div class="card-header">
+                                <h3 class="card-title">Активные записи</h3>
+
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body p-0">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Дата</th>
+                                        <th>Время</th>
+                                        <th>Имя</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($eventList as $event)
+                                    <tr>
+
+                                            <td>{{$event->start}}</td>
+                                            <td>{{$event->title}}</td>
+                                            <td>@if($event->user)
+                                                    {{$event->user->name}}
+                                                @endif
+                                            </td>
+
+                                    </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+
+
+
                     <!-- /.col -->
                 </div>
                 <!-- /.row -->
             </div><!-- /.container-fluid -->
         </section>
 
-      {{--  <div class="modal fade" id="modal-info">
-            <div class="modal-dialog">
-                <div class="modal-content bg-info">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Выбор действия</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="choise" class="form-horizontal">
-                            <!-- /.card-body -->
-                            <div class="modal-footer justify-content-between">
-                                <label data-idevent="" id="for_id_event" data-event-status="" for="">Время <span id="time_record"></span></label>
-                            </div>
-                            <div class="modal-footer justify-content-between">
-                                <input data-idEvent=""
-                                       id="confirm"
-                                       type="submit" name="confirm" class="btn btn-outline-light" value="Подтвердить">
-                                <input data-idEvent=""
-                                       id="close"
-                                       type="submit" name="close" class="btn btn-outline-light" value="Отменить">
-                                <input data-idEvent=""
-                                       id="delete"
-                                       type="submit" name="delete" class="btn btn-outline-light" value="Удалить">
-                            </div>
-
-                            <!-- /.card-footer -->
-                        </form>
-                    </div>
-
-                </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div>--}}
 
         <div class="modal fade" id="modal-info">
             <div class="modal-dialog">
