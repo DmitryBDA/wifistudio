@@ -12,8 +12,8 @@ class FullCalendarController extends Controller
 {
     public function index()
     {
-
-        $eventList = Event::where('status', '!=', 1)->with('user')->orderBy('start', 'asc')->get();
+        $tekDate = Carbon::today()->format('Y-m-d');
+        $eventList = Event::where('status', '!=', 1)->where('start', '>=', $tekDate)->with('user')->orderBy('start', 'asc')->get();
 
         $event = new Event;
         //$event = Event::with('user')->find(7);
@@ -58,6 +58,31 @@ class FullCalendarController extends Controller
             'status' => $request->status
         ];
         $event = Event::insert($insertArr);
+
+        return response()->json($event);
+    }
+
+    public function createList(Request $request)
+    {
+
+        $arrEvents = $request->dataForm;
+
+        $start = $request->start;
+        $end = $request->end;
+
+        foreach ($arrEvents as $Event)
+        {
+            $title = $Event['value'];
+
+            $insertArr = [ 'title' => $title,
+                'start' => $start,
+                'end' => $end,
+                'allDay' => 1,
+                'status' => 1
+            ];
+            $event = Event::insert($insertArr);
+
+        }
 
         return response()->json($event);
     }

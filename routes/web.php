@@ -48,6 +48,8 @@ Route::middleware(['role:admin'])->prefix('admin')->group(function () {
 
     Route::post('/fullcalendar/create',[App\Http\Controllers\Admin\FullCalendarController::class,'create']);
 
+    Route::post('/fullcalendar/create-list',[App\Http\Controllers\Admin\FullCalendarController::class,'createList']);
+
     Route::post('/fullcalendar/update',[App\Http\Controllers\Admin\FullCalendarController::class,'update']);
 
     Route::post('/fullcalendar/action-with-events',[App\Http\Controllers\Admin\FullCalendarController::class,'actionWithEvents']);

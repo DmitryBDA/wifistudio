@@ -24,21 +24,21 @@
                 }
             });
 
-            function select(elem){
+            function select(elem) {
                 var rng, sel;
-                if ( document.createRange ) {//Не все браузеры поддерживают createRange
+                if (document.createRange) {//Не все браузеры поддерживают createRange
                     rng = document.createRange();//создаем объект область
-                    rng.selectNode( elem )//выберем текущий узел
+                    rng.selectNode(elem)//выберем текущий узел
                     sel = window.getSelection();//Получаем объект текущее выделение
-                    var strSel = ''+sel; //Преобразуем в строку (ох уж js...)
+                    var strSel = '' + sel; //Преобразуем в строку (ох уж js...)
                     if (!strSel.length) { //Если ничего не выделено
                         sel.removeAllRanges();//Очистим все выделения (на всякий случай)
-                        sel.addRange( rng ); //Выделим текущий узел
+                        sel.addRange(rng); //Выделим текущий узел
                     }
                 } else {//Если браузер не поддерживает createRange (IE<9, например)
                     //Выделяем таким образом, уже без всяких проверок
                     var rng = document.body.createTextRange();
-                    rng.moveToElementText( elem );
+                    rng.moveToElementText(elem);
                     rng.select();
                 }
             }
@@ -55,8 +55,8 @@
 
                     // make the event draggable using jQuery UI
                     $(this).draggable({
-                        zIndex        : 1070,
-                        revert        : true, // will cause the event to go back to its
+                        zIndex: 1070,
+                        revert: true, // will cause the event to go back to its
                         revertDuration: 0  //  original position after the drag
                     })
 
@@ -69,9 +69,9 @@
              -----------------------------------------------------------------*/
             //Date for the calendar events (dummy data)
             var date = new Date()
-            var d    = date.getDate(),
-                m    = date.getMonth(),
-                y    = date.getFullYear()
+            var d = date.getDate(),
+                m = date.getMonth(),
+                y = date.getFullYear()
 
             var Calendar = FullCalendar.Calendar;
             var Draggable = FullCalendar.Draggable;
@@ -85,56 +85,103 @@
 
             new Draggable(containerEl, {
                 itemSelector: '.external-event',
-             /*   eventData: function(eventEl) {
-                    return {
-                        title: eventEl.innerText,
-                        backgroundColor: window.getComputedStyle( eventEl ,null).getPropertyValue('background-color'),
-                        borderColor: window.getComputedStyle( eventEl ,null).getPropertyValue('background-color'),
-                        textColor: window.getComputedStyle( eventEl ,null).getPropertyValue('color'),
-                    };
-                }*/
+                /*   eventData: function(eventEl) {
+                       return {
+                           title: eventEl.innerText,
+                           backgroundColor: window.getComputedStyle( eventEl ,null).getPropertyValue('background-color'),
+                           borderColor: window.getComputedStyle( eventEl ,null).getPropertyValue('background-color'),
+                           textColor: window.getComputedStyle( eventEl ,null).getPropertyValue('color'),
+                       };
+                   }*/
             });
 
             var calendar = new Calendar(calendarEl, {
                 headerToolbar: {
-                    left  : 'prev,next today',
+                    left: 'prev,next today',
                     center: 'title',
-                    right : 'dayGridMonth,timeGridWeek,timeGridDay'
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
                 },
                 firstDay: 1,
                 locale: 'ru',
                 themeSystem: 'bootstrap',
-                events:"/admin/fullcalendar/show-events",
-                editable  : true,
-                droppable : true, // this allows things to be dropped onto the calendar !!!
+                events: "/admin/fullcalendar/show-events",
+                editable: true,
+                droppable: true, // this allows things to be dropped onto the calendar !!!
                 selectable: true,
-                select:function (info) {
-                    var title = prompt('Event Title:');
-                    if (title) {
-                        console.log(info)
-                        var start = new Date(info.start);
-                        start = moment(start).format("Y-MM-DD");
-                        var end = new Date(info.end);
-                        end = moment(end).format("Y-MM-DD");
-                        var allDay = info.allDay ? 1 : 0;
-                        var status = 1;
+                dateClick: function (date) {
 
-                        console.log(start)
-                        console.log(end)
-                        console.log(allDay)
+                    $('#addEventsNewTime').remove();
+
+                    var HtmlForm = " <form id=\"addEventsNewTime\" data-start=\"\" data-end=\"\" class=\"form-horizontal\">" +
+                    "<div class=\"addAfterThisElement\"></div>" +
+                    "<div id=\"id_event_1\" class=\"modal-footer justify-content-between addEventsTimer\">" +
+                        "<label>Время:" +
+                            "<input name=\"event_1\" type=\"time\" value=\"00:00\">" +
+                        "</label>" +
+                    "</div>" +
+                    "<div class=\"modal-footer justify-content-between\">" +
+                        "<button type=\"button\" class=\"btn btn-outline-light\" data-dismiss=\"modal\">Закрыть</button>" +
+                        "<button id=\"addEventsTime\" type=\"button\" class=\"btn btn-outline-light\">Добавить</button>" +
+                        "<button type=\"submit\" class=\"btn btn-outline-light\">Сохранить</button>" +
+                    "</div>" +
+                "</form>"
+
+                    $('#bodyForAddEventsTime').append(HtmlForm);
+
+                    var start = new Date(date.dateStr);
+                    start = moment(start).format("Y-MM-DD");
+                    var end = new Date(date.dateStr);
+                    end = moment(end).format("Y-MM-DD");
+                    $('#addEventsNewTime').attr('data-start',start)
+                    $('#addEventsNewTime').attr('data-end',end)
+
+                    $('#showAddEventsTime').click()
+
+
+                    $('#addEventsNewTime').on('submit', function (e, start, end) {
+                        // Stop form from sending request to server
+                        e.preventDefault();
+
+
+
+                        var dataForm = $('#addEventsNewTime').serializeArray();
+
+                        var start = $('#addEventsNewTime').data('start')
+                        var end = $('#addEventsNewTime').data('end')
 
                         $.ajax({
-                            url: "/admin/fullcalendar/create",
-                            data: 'title=' + title + '&start=' + start + '&end=' + end + '&allDay=' + allDay + '&status=' + status,
+                            url: "/admin/fullcalendar/create-list",
+                            data: {
+                                dataForm: dataForm,
+                                start:start,
+                                end:end,
+                            },
                             type: "POST",
                             success: function (data) {
+                                $('.close').click();
                                 calendar.refetchEvents()
                             }
                         });
-                    }
+
+                    })
+
+                    $('#addEventsTime').click(function (e) {
+                        var allEventTimer = $('.addEventsTimer');
+
+                        var countElements = allEventTimer.length
+                        var idNextElem = countElements + 1
+                        console.log(idNextElem)
+
+                        var addAfterThisElem = $('#id_event_' + countElements);
+
+                        addAfterThisElem.after("<div id=\"id_event_"+idNextElem+"\" class=\"modal-footer justify-content-between addEventsTimer\"><label>Время:<input name=\"event_"+idNextElem+"\" type=\"time\" value=\"00:00\"></label></div>");
+
+                    })
+
+
 
                 },
-                drop      : function(info) {
+                drop: function (info) {
 
                     var key = $(info.draggedEl).css("background-color");
                     var arrColorEvents = new Map([
@@ -143,7 +190,7 @@
                         ['rgb(167, 29, 42)', '3'],
                     ]);
 
-                    if(arrColorEvents.get(key)){
+                    if (arrColorEvents.get(key)) {
                         var status = arrColorEvents.get(key);
                     } else {
                         var status = info.draggedEl.classList[1];
@@ -192,7 +239,7 @@
                         url: "/admin/fullcalendar/showModalAction",
                         type: "GET",
                         data: {
-                            idEvent:event.event._def.publicId
+                            idEvent: event.event._def.publicId
                         },
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -201,7 +248,7 @@
 
                             $('#choise').html(data);
 
-                            $('#time_record').blur(function (){
+                            $('#time_record').blur(function () {
                                 var newTitle = $(this).val();
                                 var idEvent = $(this).data('idevent')
 
@@ -220,7 +267,7 @@
 
                             $("#phone").mask("8(999)999-99-99");
 
-                            $('#confirm').click(function(e) {
+                            $('#confirm').click(function (e) {
                                 // Stop form from sending request to server
                                 e.preventDefault();
 
@@ -228,7 +275,7 @@
                                   const phone = prompt('Укажите телефон');*/
 
                                 var idEent = $(this).attr('data-idEvent');
-                                var eventStatus =  $('#for_id_event').attr('data-event-status');
+                                var eventStatus = $('#for_id_event').attr('data-event-status');
 
                                 $.ajax({
                                     type: "POST",
@@ -244,7 +291,7 @@
                                 });
                             })
 
-                            $('#close').click(function(e) {
+                            $('#close').click(function (e) {
                                 // Stop form from sending request to server
                                 e.preventDefault();
 
@@ -265,7 +312,7 @@
                                 });
                             })
 
-                            $('#delete').click(function(e) {
+                            $('#delete').click(function (e) {
                                 // Stop form from sending request to server
                                 e.preventDefault();
 
@@ -295,7 +342,7 @@
             });
 
 
-            $('#choise').on('submit', function (e){
+            $('#choise').on('submit', function (e) {
                 // Stop form from sending request to server
                 e.preventDefault();
 
@@ -303,10 +350,9 @@
                   const phone = prompt('Укажите телефон');*/
 
                 var idEent = $('#for_id_event').attr('data-idEvent');
-                var eventStatus =  $('#for_id_event').attr('data-event-status');
+                var eventStatus = $('#for_id_event').attr('data-event-status');
 
                 var dataForm = $('#choise').serializeArray();
-
 
 
                 $.ajax({
@@ -315,7 +361,7 @@
                     data: {
                         id: idEent,
                         type: 'record',
-                        dataForm:dataForm,
+                        dataForm: dataForm,
                     },
                     success: function (response) {
 
@@ -338,7 +384,7 @@
                 // Add color effect to button
                 $('#add-new-event').css({
                     'background-color': currColor,
-                    'border-color'    : currColor
+                    'border-color': currColor
                 })
             })
             $('#add-new-event').click(function (e) {
@@ -354,8 +400,8 @@
                 var event = $('<div />')
                 event.css({
                     'background-color': currColor,
-                    'border-color'    : currColor,
-                    'color'           : '#fff'
+                    'border-color': currColor,
+                    'color': '#fff'
                 }).addClass('external-event')
                 event.text(val)
                 $('#external-events').prepend(event)
@@ -367,30 +413,29 @@
                 $('#new-event').val('')
             })
 
-            $('#eventsList').on('click',function (){
+            $('#eventsList').on('click', function () {
                 /* Get the text field */
 
                 $.ajax({
                     type: "get",
                     url: '/admin/fullcalendar/copy-data',
                     success: function (response) {
-                        console.log(response)
+
                         str = '';
                         firstDate = '';
-                        for (i = 0; i<response.length; i++)
-                        {
+                        for (i = 0; i < response.length; i++) {
 
 
-                            if(i == 0){
-                                str = response[i].start + ':' + response[i].title
+                            if (i == 0) {
+                                str = response[i].start + ': ' + response[i].title
                                 firstDate = response[i].start;
                             }
-                            if(i != 0) {
+                            if (i != 0) {
                                 if (firstDate == response[i].start) {
                                     str = str + ', ' + response[i].title;
                                 } else {
                                     str = str + '<br>'
-                                    str = str + response[i].start + ':' + response[i].title
+                                    str = str + response[i].start + ': ' + response[i].title
                                 }
                             }
                             firstDate = response[i].start;
@@ -404,9 +449,6 @@
                     }
                 });
             })
-
-
-
         })
     </script>
 
@@ -442,21 +484,20 @@
                         <div class="sticky-top mb-3">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Draggable Events</h4>
+                                    <h4 class="card-title">Перетащить даты</h4>
                                 </div>
                                 <div class="card-body">
                                     <!-- the events -->
                                     <div id="external-events">
-                                        <div class="external-event bg-success">9:00</div>
                                         <div class="external-event bg-success">11:00</div>
                                         <div class="external-event bg-success">14:00</div>
                                         <div class="external-event bg-success">18:00</div>
                                         <div class="external-event bg-success">20:00</div>
-                                     {{--   <div class="external-event bg-warning">Go home</div>
-                                        <div class="external-event bg-info">Do homework</div>
-                                        <div class="external-event bg-primary">Work on UI design</div>
-                                        <div class="external-event bg-danger">Sleep tight</div>--}}
-                                        <div class="checkbox">
+                                        {{--   <div class="external-event bg-warning">Go home</div>
+                                           <div class="external-event bg-info">Do homework</div>
+                                           <div class="external-event bg-primary">Work on UI design</div>
+                                           <div class="external-event bg-danger">Sleep tight</div>--}}
+                                        <div style="display: block;" class="checkbox">
                                             <label for="drop-remove">
                                                 <input type="checkbox" id="drop-remove">
                                                 remove after drop
@@ -469,28 +510,31 @@
                             <!-- /.card -->
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Create Event</h3>
+                                    <h3 class="card-title">Создать событие</h3>
                                 </div>
 
 
                                 <div class="card-body">
                                     <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
                                         <ul class="fc-color-picker" id="color-chooser">
-                                            <li><a class="text-success" href="#"><i class="fas fa-square"></i></a></li>
-                                          {{--  <li><a class="text-danger" href="#"><i class="fas fa-square"></i></a></li>
-                                            <li><a class="text-warning" href="#"><i class="fas fa-square"></i></a></li>--}}
-                                       {{--     <li><a class="text-warning" href="#"><i class="fas fa-square"></i></a></li>
-                                            <li><a class="text-primary" href="#"><i class="fas fa-square"></i></a></li>
+{{--                                            <li><a class="text-success" href="#"><i class="fas fa-square"></i></a></li>--}}
+                                            {{--  <li><a class="text-danger" href="#"><i class="fas fa-square"></i></a></li>
+                                              <li><a class="text-warning" href="#"><i class="fas fa-square"></i></a></li>--}}
+                                            {{--     <li><a class="text-warning" href="#"><i class="fas fa-square"></i></a></li>
+                                                 <li><a class="text-primary" href="#"><i class="fas fa-square"></i></a></li>
 
-                                            <li><a class="text-muted" href="#"><i class="fas fa-square"></i></a></li>--}}
+                                                 <li><a class="text-muted" href="#"><i class="fas fa-square"></i></a></li>--}}
                                         </ul>
                                     </div>
                                     <!-- /btn-group -->
                                     <div class="input-group">
-                                        <input id="new-event" type="text" class="form-control" placeholder="Event Title">
+                                        <input id="new-event" type="time" class="form-control">
 
                                         <div class="input-group-append">
-                                            <button id="add-new-event" type="button" class="btn btn-primary" style="background-color: rgb(25, 105, 44); border-color: rgb(25, 105, 44);">Add</button>
+                                            <button id="add-new-event" type="button" class="btn btn-primary"
+                                                    style="background-color: rgb(25, 105, 44); border-color: rgb(25, 105, 44);">
+                                                Добавить
+                                            </button>
                                         </div>
                                         <!-- /btn-group -->
                                     </div>
@@ -514,7 +558,7 @@
                         <div class="row">
                             <div class="col-md-1">
                                 <div style="width: 100%;height: 49px;" class="btn-group-vertical">
-                                    <button id="eventsList" type="button" class="btn btn-default">Top</button>
+                                    <button id="eventsList" type="button" class="btn btn-default">Список дат</button>
                                 </div>
                             </div>
                             <div class="col-md-11">
@@ -523,7 +567,8 @@
                                         <h3 class="card-title">Активные записи</h3>
 
                                         <div class="card-tools">
-                                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse"
+                                                    title="Collapse">
                                                 <i class="fas fa-plus"></i>
                                             </button>
                                         </div>
@@ -559,18 +604,6 @@
                         </div>
                         <!-- /.card -->
                     </div>
-
-
-
-
-
-
-
-
-
-
-
-
                     <!-- /.col -->
                 </div>
                 <!-- /.row -->
@@ -592,7 +625,7 @@
 
                             @include('admin.calendar.ajax-elem.actionEvents')
 
-                            <!-- /.card-footer -->
+                        <!-- /.card-footer -->
                         </form>
                     </div>
 
@@ -601,8 +634,8 @@
             </div>
             <!-- /.modal-dialog -->
         </div>
-
-        <button style="display: none" id="btn-from-chose" type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-info">
+        <button style="display: none" id="btn-from-chose" type="button" class="btn btn-info" data-toggle="modal"
+                data-target="#modal-info">
             Launch Info Modal
         </button>
 
@@ -610,7 +643,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Default Modal</h4>
+                        <h4 class="modal-title">Свободные даты</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -619,18 +652,46 @@
 
                     </div>
                     <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button id="copy-button" data-clipboard-target="#post-shortlink" type="button" class="btn btn-primary">Copy</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                        <button id="copy-button" data-clipboard-target="#post-shortlink" type="button"
+                                class="btn btn-primary">Копировать
+                        </button>
                     </div>
                 </div>
                 <!-- /.modal-content -->
             </div>
             <!-- /.modal-dialog -->
         </div>
-
-
-        <button style="display: none;" id="modalDefaultCopyText" type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
+        <button style="display: none;" id="modalDefaultCopyText" type="button" class="btn btn-default"
+                data-toggle="modal" data-target="#modal-default">
             Launch Default Modal
+        </button>
+
+
+        <div class="modal fade" id="modal-primary">
+            <div class="modal-dialog">
+                <div class="modal-content bg-primary">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Primary Modal</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div id="bodyForAddEventsTime" class="modal-body">
+                        <form id="addEventsNewTime" data-start="" data-end="" class="form-horizontal">
+
+                            @include('admin.calendar.ajax-elem.addEventsTime')
+                        <!-- /.card-footer -->
+                        </form>
+
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <button id="showAddEventsTime" style="display: none;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-primary">
+            Launch Primary Modal
         </button>
 
 

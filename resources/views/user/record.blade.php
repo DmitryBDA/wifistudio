@@ -110,9 +110,6 @@
                                           $('#feedbackForm').css('display', 'none');
                                           $('.alert-success').removeClass('d-none');
 
-                                          setTimeout(function (){
-                                              $('.close').click();
-                                          }, 1500)
 
                                       }
                                   });

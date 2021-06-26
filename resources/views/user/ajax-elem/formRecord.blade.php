@@ -52,7 +52,14 @@
             </form>
 
             <!-- Сообщение об успешной отправки формы -->
-            <div class="alert alert-success form-success d-none ">Вы успешно записаны.</div>
+            <div class="alert alert-success form-success d-none ">Вы успешно записаны.
+                <div class="">Время: {{$event->title}} </div>
+
+                <div class="">Дата:  @if($event->title)
+                                        {{$event->start}}
+                                    @endif </div>
+            </div>
+
         </div>
     </div>
 
