@@ -24,13 +24,28 @@
                 }
             });
 
-            /* initialize the external events
-             -----------------------------------------------------------------*/
+            function select(elem){
+                var rng, sel;
+                if ( document.createRange ) {//Не все браузеры поддерживают createRange
+                    rng = document.createRange();//создаем объект область
+                    rng.selectNode( elem )//выберем текущий узел
+                    sel = window.getSelection();//Получаем объект текущее выделение
+                    var strSel = ''+sel; //Преобразуем в строку (ох уж js...)
+                    if (!strSel.length) { //Если ничего не выделено
+                        sel.removeAllRanges();//Очистим все выделения (на всякий случай)
+                        sel.addRange( rng ); //Выделим текущий узел
+                    }
+                } else {//Если браузер не поддерживает createRange (IE<9, например)
+                    //Выделяем таким образом, уже без всяких проверок
+                    var rng = document.body.createTextRange();
+                    rng.moveToElementText( elem );
+                    rng.select();
+                }
+            }
+
             function ini_events(ele) {
                 ele.each(function () {
 
-                    // create an Event Object (https://fullcalendar.io/docs/event-object)
-                    // it doesn't need to have a start or end
                     var eventObject = {
                         title: $.trim($(this).text()) // use the element's text as the event title
                     }
@@ -116,32 +131,6 @@
                                 calendar.refetchEvents()
                             }
                         });
-
-                       /* $.ajax({
-                            url: SITEURL + "/fullcalendarAjax",
-                            data: {
-                                title: title,
-                                start: start,
-                                end: end,
-                                type: 'add'
-                            },
-                            type: "POST",
-                            success: function (data) {
-                                displayMessage("Event Created Successfully");
-
-                                calendar.fullCalendar('renderEvent',
-                                    {
-                                        id: data.id,
-                                        title: title,
-                                        start: start,
-                                        end: end,
-                                        backgroundColor: '#28a745',
-                                        allDay: allDay
-                                    },true);
-
-                                calendar.fullCalendar('unselect');
-                            }
-                        });*/
                     }
 
                 },
@@ -168,12 +157,6 @@
                     var allDay = info.allDay ? 1 : 0;
                     var title = info.draggedEl.innerText;
 
-
-                    // is the "remove after drop" checkbox checked?
-                    if (checkbox.checked) {
-                        // if so, remove the element from the "Draggable Events" list
-                        //info.draggedEl.parentNode.removeChild(info.draggedEl);
-                    }
 
                     $.ajax({
                         url: "/admin/fullcalendar/create",
@@ -205,18 +188,6 @@
                 },
                 eventClick: function (event) {
 
-                  /*  var eventStatus = event.event._def.extendedProps.status;
-
-                    $('#btn-from-chose').click();
-
-                    $('input[type="submit"]').attr('data-idEvent', event.event._def.publicId)
-
-                    var titleEvent =  event.event._def.title;
-
-                    $('#time_record').text(titleEvent)
-                    $('#for_id_event').attr('data-idevent', event.event._def.publicId)
-                    $('#for_id_event').attr('data-event-status', eventStatus)
-*/
                     $.ajax({
                         url: "/admin/fullcalendar/showModalAction",
                         type: "GET",
@@ -396,6 +367,45 @@
                 $('#new-event').val('')
             })
 
+            $('#eventsList').on('click',function (){
+                /* Get the text field */
+
+                $.ajax({
+                    type: "get",
+                    url: '/admin/fullcalendar/copy-data',
+                    success: function (response) {
+                        console.log(response)
+                        str = '';
+                        firstDate = '';
+                        for (i = 0; i<response.length; i++)
+                        {
+
+
+                            if(i == 0){
+                                str = response[i].start + ':' + response[i].title
+                                firstDate = response[i].start;
+                            }
+                            if(i != 0) {
+                                if (firstDate == response[i].start) {
+                                    str = str + ', ' + response[i].title;
+                                } else {
+                                    str = str + '<br>'
+                                    str = str + response[i].start + ':' + response[i].title
+                                }
+                            }
+                            firstDate = response[i].start;
+
+                        }
+
+                        $('#modalDefaultCopyText').click()
+
+                        $('#post-shortlink')[0].innerHTML = str;
+
+                    }
+                });
+            })
+
+
 
         })
     </script>
@@ -501,46 +511,63 @@
                         <!-- /.card -->
                     </div>
                     <div class="col-md-12">
-
-                        <div class="card card-info collapsed-card">
-                            <div class="card-header">
-                                <h3 class="card-title">Активные записи</h3>
-
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <div style="width: 100%;height: 49px;" class="btn-group-vertical">
+                                    <button id="eventsList" type="button" class="btn btn-default">Top</button>
                                 </div>
                             </div>
-                            <div class="card-body p-0">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th>Дата</th>
-                                        <th>Время</th>
-                                        <th>Имя</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($eventList as $event)
-                                    <tr>
+                            <div class="col-md-11">
+                                <div class="card card-info collapsed-card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Активные записи</h3>
 
-                                            <td>{{$event->start}}</td>
-                                            <td>{{$event->title}}</td>
-                                            <td>@if($event->user)
-                                                    {{$event->user->name}}
-                                                @endif
-                                            </td>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body p-0">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>Дата</th>
+                                                <th>Время</th>
+                                                <th>Имя</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($eventList as $event)
+                                                <tr>
 
-                                    </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
+                                                    <td>{{$event->start}}</td>
+                                                    <td>{{$event->title}}</td>
+                                                    <td>@if($event->user)
+                                                            {{$event->user->name}}
+                                                        @endif
+                                                    </td>
+
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
                             </div>
-                            <!-- /.card-body -->
                         </div>
                         <!-- /.card -->
                     </div>
+
+
+
+
+
+
+
+
+
 
 
 
@@ -578,6 +605,35 @@
         <button style="display: none" id="btn-from-chose" type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-info">
             Launch Info Modal
         </button>
+
+        <div class="modal fade" id="modal-default">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Default Modal</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div id="post-shortlink" class="modal-body">
+
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button id="copy-button" data-clipboard-target="#post-shortlink" type="button" class="btn btn-primary">Copy</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+
+
+        <button style="display: none;" id="modalDefaultCopyText" type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
+            Launch Default Modal
+        </button>
+
+
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->

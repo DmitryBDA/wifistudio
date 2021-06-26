@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\UserEvent;
+use Illuminate\Support\Carbon;
 
 class FullCalendarController extends Controller
 {
@@ -28,7 +29,7 @@ class FullCalendarController extends Controller
         $start = (!empty($_GET["start"])) ? ($_GET["start"]) : ('');
         $end = (!empty($_GET["end"])) ? ($_GET["end"]) : ('');
 
-        $data = Event::whereDate('start', '>=', $start)->whereDate('end',   '<=', $end)->get(['id','title','start', 'end', 'status', 'allDay']);
+        $data = Event::whereDate('start', '>=', $start)->whereDate('end',   '<=', $end)->orderBy('start', 'asc')->get(['id','title','start', 'end', 'status', 'allDay']);
 
 
         foreach ($data as $elem)
@@ -168,6 +169,16 @@ class FullCalendarController extends Controller
         if($request->ajax()){
             return view('admin.calendar.ajax-elem.actionEvents', compact('event'))->render();
         }
+    }
+
+    public function copyEvents(){
+        $tekDate = Carbon::today()->format('Y-m-d');
+        $data = Event::where('status', '=', 1)
+            ->whereDate('start','>=', $tekDate)
+            ->orderBy('start','asc')
+            ->orderBy('title','asc')
+            ->get(['id','start', 'title']);
+        return response()->json($data);
     }
 
 

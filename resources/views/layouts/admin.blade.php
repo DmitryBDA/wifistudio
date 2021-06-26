@@ -270,8 +270,12 @@
 <!-- AdminLTE for demo purposes -->
 <script src="/adm/dist/js/demo.js"></script>
 <script src="/adm/jquery.maskedinput.js"></script>
-
-
+<script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.4.0/clipboard.min.js"></script>
+<script>
+    (function(){
+        new Clipboard('#copy-button');
+    })();
+</script>
 
 <script src="/adm/admin.js"></script>
 
