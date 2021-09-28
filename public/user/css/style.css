@@ -3155,3 +3155,24 @@ color:#ffaa31;
 .team_own.curosel-style.owl-carousel.owl-theme {
   clear: both;
 }
+
+.title_record{
+
+    font-size: 33px;
+    text-align: center;
+    padding: 5px;
+}
+.timeRecordShow{
+    float: left;
+    margin-right: 40px;
+}
+.title_fon{
+    background-image: url("/user/img/fontitle.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}

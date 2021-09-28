@@ -425,20 +425,21 @@
                         firstDate = '';
                         for (i = 0; i < response.length; i++) {
 
+                            var date = moment(response[i].start).format("DD.MM");
 
                             if (i == 0) {
-                                str = response[i].start + ': ' + response[i].title
-                                firstDate = response[i].start;
+                                str = date + ': ' + response[i].title
+                                firstDate = date;
                             }
                             if (i != 0) {
-                                if (firstDate == response[i].start) {
+                                if (firstDate == date) {
                                     str = str + ', ' + response[i].title;
                                 } else {
                                     str = str + '<br>'
-                                    str = str + response[i].start + ': ' + response[i].title
+                                    str = str + date + ': ' + response[i].title
                                 }
                             }
-                            firstDate = response[i].start;
+                            firstDate = date;
 
                         }
 
@@ -497,7 +498,7 @@
                                            <div class="external-event bg-info">Do homework</div>
                                            <div class="external-event bg-primary">Work on UI design</div>
                                            <div class="external-event bg-danger">Sleep tight</div>--}}
-                                        <div style="display: block;" class="checkbox">
+                                        <div style="display: none;" class="checkbox">
                                             <label for="drop-remove">
                                                 <input type="checkbox" id="drop-remove">
                                                 remove after drop

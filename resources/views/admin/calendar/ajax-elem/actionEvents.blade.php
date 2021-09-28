@@ -8,7 +8,6 @@
     <div style="width: 100%;"><label for="">Телефон:
             <span>@if($event->user){{$event->user->phone}} @endif</span></label></div>
 
-
 </div>
 <div class="modal-footer justify-content-between">
     @if($event->status == 2)

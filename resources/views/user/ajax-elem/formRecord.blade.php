@@ -14,7 +14,13 @@
                     <div class="col-sm-12">
                         <!-- Имя пользователя -->
                         <div class="form-group">
-                            <label for="name" class="control-label">Время: {{$event->title}}</label>
+                            <div class="timeRecordShow"><label class="control-label">Дата: </label><span>@if($event->title)
+                                        {{$event->start}}
+                                    @endif</span>
+                            </div>
+                            <div class="timeRecordShow">
+                                <label for="name" class="control-label">Время: </label><span> {{$event->title}}</span>
+                            </div>
 
                         </div>
                     </div>
@@ -22,7 +28,8 @@
                         <!-- Имя пользователя -->
                         <div class="form-group">
                             <label for="name" class="control-label">Имя</label>
-                            <input style="padding: 0" id="name" type="text" name="name" class="form-control" value="" placeholder="Имя" minlength="2" maxlength="30" required="required">
+                            <input style="padding: 0" id="name" type="text" name="name" class="form-control" value=""
+                                   placeholder="Имя" minlength="2" maxlength="30" required="required">
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
@@ -30,7 +37,8 @@
                         <!-- Имя пользователя -->
                         <div class="form-group">
                             <label for="phone" class="control-label">Телефон</label>
-                            <input style="padding: 0" id="phone" type="text" name="phone" class="form-control" value="" placeholder="Телефон" minlength="2" maxlength="30" required="required">
+                            <input style="padding: 0" id="phone" type="text" name="phone" class="form-control" value=""
+                                   placeholder="Телефон" minlength="2" maxlength="30" required="required">
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
@@ -43,21 +51,22 @@
                 </div>
                 <!-- Индикация загрузки данных формы на сервер -->
                 <div class="progress mb-2 d-none">
-                    <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0">
+                    <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar"
+                         aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0">
                         <span class="sr-only">0%</span>
                     </div>
                 </div>
                 <!-- Кнопка для отправки формы -->
-                <button type="submit" class="btn btn-primary float-right" >Записаться</button>
+                <button type="submit" class="btn btn-primary float-right">Записаться</button>
             </form>
 
             <!-- Сообщение об успешной отправки формы -->
             <div class="alert alert-success form-success d-none ">Вы успешно записаны.
                 <div class="">Время: {{$event->title}} </div>
 
-                <div class="">Дата:  @if($event->title)
-                                        {{$event->start}}
-                                    @endif </div>
+                <div class="">Дата: @if($event->title)
+                        {{$event->start}}
+                    @endif </div>
             </div>
 
         </div>

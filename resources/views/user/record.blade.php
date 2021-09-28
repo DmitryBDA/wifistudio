@@ -138,9 +138,9 @@
         <div class="container">
             <div class="row">
                 <!--section title-->
-                <div class="col-md-12 col-sm-12 col-lg-12">
-                    <div class="section_title">
-
+                <div class="col-md-12 col-sm-12 col-lg-12 title_fon">
+                    <div class="title_record">
+                        Запись на маникюр
                     </div>
                 </div>
                 <!--end section title-->
