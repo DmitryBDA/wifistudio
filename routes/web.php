@@ -15,15 +15,15 @@ use App\Http\Controllers\User\Studio\RecordController;
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('welcome');
-});
+});*/
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/', [MainController::class, 'index'])->name('main');
+//Route::get('/', [MainController::class, 'index'])->name('main');
 
 Route::get('/record', [RecordController::class, 'index'])->name('record');
 

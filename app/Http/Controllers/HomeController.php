@@ -23,6 +23,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if (auth()->user()->hasRole('admin')) {
+            return redirect(route('mainAdmin'));
+        }
         return view('home');
     }
 }
