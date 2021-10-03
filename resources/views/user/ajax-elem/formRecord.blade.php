@@ -27,9 +27,9 @@
                     <div class="col-sm-6">
                         <!-- Имя пользователя -->
                         <div class="form-group">
-                            <label for="name" class="control-label">Имя</label>
+                            <label for="name" class="control-label">Фамилия и имя</label>
                             <input style="padding: 0" id="name" type="text" name="name" class="form-control" value=""
-                                   placeholder="Имя" minlength="2" maxlength="30" required="required">
+                                   placeholder="Фамилия и Имя" minlength="2" maxlength="30" required="required">
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>

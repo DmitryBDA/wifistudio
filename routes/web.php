@@ -15,9 +15,9 @@ use App\Http\Controllers\User\Studio\RecordController;
 |
 */
 
-/*Route::get('/', function () {
-    return view('welcome');
-});*/
+Route::get('/', function () {
+    return redirect('record');
+});
 
 Auth::routes();
 
