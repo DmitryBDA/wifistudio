@@ -19,7 +19,7 @@ class Telegram extends Notification
      *
      * @return void
      */
-    public function __construct($name)
+    public function __construct($name = null)
     {
         $this->nameUser = $name;
     }
@@ -67,7 +67,7 @@ class Telegram extends Notification
         $url = url('/testtelegram' );
 
         return TelegramMessage::create()
-            ->content("Добрый день $this->nameUser вам необходимо записаться на коррекцию");
+            ->content("Новая запись. $this->nameUser ");
 
     }
 }
