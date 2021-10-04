@@ -105,6 +105,7 @@
                 locale: 'ru',
                 themeSystem: 'bootstrap',
                 events: "/admin/fullcalendar/show-events",
+                height:700,
                 editable: true,
                 droppable: true, // this allows things to be dropped onto the calendar !!!
                 selectable: true,

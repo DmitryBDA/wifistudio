@@ -65,7 +65,7 @@
                 locale: 'ru',
                 themeSystem: 'bootstrap',
                 events:"/record/fullcalendar/show-events",
-
+                height:650,
                 selectable: true,
                 eventClick: function (event) {
 
