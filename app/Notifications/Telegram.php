@@ -12,15 +12,16 @@ use NotificationChannels\Telegram\TelegramChannel;
 class Telegram extends Notification
 {
     use Queueable;
+    protected $nameUser;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($name)
     {
-        //
+        $this->nameUser = $name;
     }
 
     /**
@@ -66,7 +67,7 @@ class Telegram extends Notification
         $url = url('/testtelegram' );
 
         return TelegramMessage::create()
-            ->content("У вас новая запись");
+            ->content("Добрый день $this->nameUser вам необходимо записаться на коррекцию");
 
     }
 }

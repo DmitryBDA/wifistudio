@@ -2,8 +2,14 @@
 
 namespace App\Console;
 
+use App\Models\Event;
+use App\Models\UserEvent;
+use App\Notifications\Telegram;
+use DateTime;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Notification;
 
 class Kernel extends ConsoleKernel
 {
@@ -24,7 +30,20 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->call(function () {
+
+            $events = Event::whereDate('updated_at', Carbon::today()->addDay(-21))->get();
+
+            foreach ($events as $event)
+            {
+                $user = UserEvent::find($event->user_id);
+
+                if($user->telegram_id){
+
+                    Notification::route('telegram', $user->telegram_id)->notify(new Telegram($user->name));
+                }
+            }
+        })->everyMinute();
     }
 
     /**
