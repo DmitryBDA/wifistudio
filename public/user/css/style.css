@@ -3176,3 +3176,20 @@ color:#ffaa31;
     -o-background-size: cover;
     background-size: cover;
 }
+.custom.btn-primary:focus{
+    background-color: #eaa13c;
+    outline: none;
+    box-shadow: none;
+}
+
+.custom.btn-primary:active{
+    background-color: #eaa13c !important;
+    outline: none;
+    box-shadow: none;
+    outline: none;
+}
+.custom.btn-primary:active:focus{
+    background-color: #eaa13c!important;
+    outline: none;
+    box-shadow: none!important;
+}

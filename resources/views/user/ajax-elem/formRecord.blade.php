@@ -57,7 +57,7 @@
                     </div>
                 </div>
                 <!-- Кнопка для отправки формы -->
-                <button type="submit" class="btn btn-primary float-right">Записаться</button>
+                <button type="submit" class="btn btn-primary custom float-right">Записаться</button>
             </form>
 
             <!-- Сообщение об успешной отправки формы -->
