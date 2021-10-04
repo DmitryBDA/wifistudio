@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\Studio\MainController;
 use App\Http\Controllers\User\Studio\RecordController;
+//use App\Notifications\Telegram;
+//use Illuminate\Support\Facades\Notification;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -62,3 +65,5 @@ Route::middleware(['role:admin'])->prefix('admin')->group(function () {
 
 
 });
+//Notification::route('telegram', '599738652')
+//    ->notify(new Telegram);

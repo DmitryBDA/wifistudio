@@ -4,9 +4,11 @@ namespace App\Http\Controllers\User\Studio;
 
 use App\Http\Controllers\Controller;
 use App\Models\UserEvent;
+use App\Notifications\Telegram;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Models\Event;
+use Illuminate\Support\Facades\Notification;
 
 class RecordController extends Controller
 {
@@ -88,7 +90,7 @@ class RecordController extends Controller
 
             $event = Event::find($request->id)->update($dataUpdate);
 
-
+            Notification::route('telegram', '599738652')->notify(new Telegram);
         }
 
 
