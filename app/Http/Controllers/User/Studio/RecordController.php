@@ -28,11 +28,9 @@ class RecordController extends Controller
     {
 
         header('Content-type: application/json');
+        $tekDate = Carbon::today()->format('Y-m-d');
 
-        $start = (!empty($_GET["start"])) ? ($_GET["start"]) : ('');
-        $end = (!empty($_GET["end"])) ? ($_GET["end"]) : ('');
-
-        $data = Event::whereDate('start', '>=', $start)->whereDate('end',   '<=', $end)->where('status', '=', 1)->get(['id','title','start', 'end', 'status', 'allDay']);
+        $data = Event::whereDate('start', '>=', $tekDate)->where('status', '=', 1)->get(['id','title','start', 'end', 'status', 'allDay']);
 
 
         foreach ($data as $elem)
