@@ -588,7 +588,7 @@
                                             @foreach($eventList as $event)
                                                 <tr>
 
-                                                    <td>{{$event->start}}</td>
+                                                    <td>{{ Date::parse($event->start)->format('j.m (D)')}}</td>
                                                     <td>{{$event->title}}</td>
                                                     <td>@if($event->user)
                                                             {{$event->user->name}} {{$event->user->surname}}
