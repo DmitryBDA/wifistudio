@@ -591,7 +591,7 @@
                                                     <td>{{$event->start}}</td>
                                                     <td>{{$event->title}}</td>
                                                     <td>@if($event->user)
-                                                            {{$event->user->name}}
+                                                            {{$event->user->name}} {{$event->user->surname}}
                                                         @endif
                                                     </td>
 

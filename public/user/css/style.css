@@ -1245,6 +1245,14 @@ footer area css
     height: 46px;
     padding-left: 67px;
 }
+#surname {
+    background: #3e4755 none repeat scroll 0 0;
+    border: 1px solid #5b626d;
+    border-radius: 0;
+    color: #fff;
+    height: 46px;
+    padding-left: 67px;
+}
 #email {
     background: #3e4755 none repeat scroll 0 0;
     border: 1px solid #5b626d;
@@ -1254,6 +1262,7 @@ footer area css
     padding-left: 67px;
 }
 #name:focus,
+#surname:focus,
 #email:focus,
 #mes {
     box-shadow: none;
@@ -1849,7 +1858,7 @@ home-2 area css
 .home-2 #googleMap {
     height: 370px;
 }
-.home-2 #name {
+.home-2 #name, #surname {
     background: #1681b5 none repeat scroll 0 0;
     border: 1px solid #1681b5;
     color: #fff;

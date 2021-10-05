@@ -60,11 +60,13 @@ class RecordController extends Controller
 
     public function addRecord(Request $request){
 
-        $name = $request->dataForm[0]['value'];
-        $phone = $request->dataForm[1]['value'];
+        $surname = $request->dataForm[0]['value'];
+        $name = $request->dataForm[1]['value'];
+        $phone = $request->dataForm[2]['value'];
 
         if(!empty($name) and !empty($phone)){
             $insertArr = [
+                'surname' => $surname,
                 'name' => $name,
                 'phone' => $phone,
             ];
@@ -81,6 +83,7 @@ class RecordController extends Controller
             } else {
                 $insertArr = [
                     'name' => $name,
+                    'surname' => $surname,
                     'phone' => $phone,
                 ];
                 $newUser = UserEvent::create($insertArr);

@@ -3,7 +3,7 @@
     <label data-idevent="{{$event->id}}" id="for_id_event" data-event-status="{{$event->status}}" for="">Время:
         <input data-idevent="{{$event->id}}" type="time" id="time_record" value="{{$event->title}}">
     </label>
-    <div style="width: 100%;"><label for="">Имя: <span>@if($event->user){{$event->user->name}} @endif</span></label>
+    <div style="width: 100%;"><label for="">Имя: <span>@if($event->user){{$event->user->name}} {{$event->user->surname}} @endif</span></label>
     </div>
     <div style="width: 100%;"><label for="">Телефон:
             <span>@if($event->user){{$event->user->phone}} @endif</span></label></div>
