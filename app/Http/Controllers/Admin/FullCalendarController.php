@@ -112,11 +112,13 @@ class FullCalendarController extends Controller
         switch ($request->type) {
 
             case 'record':
-                $name = $request->dataForm[0]['value'];
-                $phone = $request->dataForm[1]['value'];
+                $surname = $request->dataForm[0]['value'];
+                $name = $request->dataForm[1]['value'];
+                $phone = $request->dataForm[2]['value'];
 
                 if(!empty($name) and !empty($phone)){
                     $insertArr = [
+                        'surname' => $surname,
                         'name' => $name,
                         'phone' => $phone,
                     ];
@@ -132,6 +134,7 @@ class FullCalendarController extends Controller
 
                     } else {
                         $insertArr = [
+                            'surname' => $surname,
                             'name' => $name,
                             'phone' => $phone,
                         ];

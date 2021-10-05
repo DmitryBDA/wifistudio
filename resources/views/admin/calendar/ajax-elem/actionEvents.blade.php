@@ -16,6 +16,7 @@
                type="button" name="confirm" class="btn btn-outline-light" value="Подтвердить">
     @elseif($event->status == 1)
         <div>
+            <input type="text" name="surname" placeholder="Фамилия" required>
             <input type="text" name="name" placeholder="Имя" required>
             <input id="phone" type="text" name="phone"  placeholder="Телефон" required>
         </div>
