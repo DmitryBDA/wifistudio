@@ -34,4 +34,8 @@ return [
         'token' => env('TELEGRAM_BOT_TOKEN'),
     ],
 
+    'nexmo' => [
+        'sms_from' => '79149098288',
+    ],
+
 ];

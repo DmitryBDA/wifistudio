@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User\Studio;
 
 use App\Http\Controllers\Controller;
 use App\Models\UserEvent;
+use App\Notifications\Sms;
 use App\Notifications\Telegram;
 
 use DateTime;
@@ -84,7 +85,7 @@ class RecordController extends Controller
                 $insertArr = [
                     'name' => $name,
                     'surname' => $surname,
-                    'phone' => $phone,
+                    'phone' => '79149098288',
                 ];
                 $newUser = UserEvent::create($insertArr);
 
@@ -95,6 +96,8 @@ class RecordController extends Controller
             }
 
             $event = Event::find($request->id)->update($dataUpdate);
+
+            //Notification::send($newUser, new Sms);
 
             Notification::route('telegram', config('config_telegram.TELEGRAM_ADMIN_ID'))->notify(new Telegram($name));
         }
