@@ -7,6 +7,7 @@ use App\Models\UserEvent;
 use App\Notifications\Sms;
 use App\Notifications\Telegram;
 
+use App\Notifications\TelegramSendReminder;
 use DateTime;
 use DateTimeZone;
 use Illuminate\Database\Eloquent\Model;
@@ -85,7 +86,7 @@ class RecordController extends Controller
                 $insertArr = [
                     'name' => $name,
                     'surname' => $surname,
-                    'phone' => '79149098288',
+                    'phone' => $phone,
                 ];
                 $newUser = UserEvent::create($insertArr);
 
@@ -98,8 +99,11 @@ class RecordController extends Controller
             $event = Event::find($request->id)->update($dataUpdate);
 
             //Notification::send($newUser, new Sms);
+            $name = 'Белоусов+Дмитрий';
+            $phone = '79149098288';
+            $time = '10:30';
 
-            Notification::route('telegram', config('config_telegram.TELEGRAM_ADMIN_ID'))->notify(new Telegram($name));
+            Notification::route('telegram', config('config_telegram.TELEGRAM_ADMIN_ID'))->notify(new TelegramSendReminder($name, $phone, $time));
         }
 
 

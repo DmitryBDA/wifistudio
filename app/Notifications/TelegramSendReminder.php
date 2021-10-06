@@ -6,22 +6,25 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use NotificationChannels\Telegram\TelegramMessage;
 use NotificationChannels\Telegram\TelegramChannel;
+use NotificationChannels\Telegram\TelegramMessage;
 
-class Telegram extends Notification
+class TelegramSendReminder extends Notification
 {
     use Queueable;
-    protected $nameUser;
-
+    protected $name;
+    protected $phone;
+    protected $time;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($name = null)
+    public function __construct($name, $phone, $time)
     {
-        $this->nameUser = $name;
+        $this->name = $name;
+        $this->phone = $phone;
+        $this->time = $time;
     }
 
     /**
@@ -64,9 +67,10 @@ class Telegram extends Notification
 
     public function toTelegram($notifiable)
     {
-
         return TelegramMessage::create()
-            ->content("Новая запись. $this->nameUser ");
-
+            ->content("<a href=\"https://api.whatsapp.com/send/?phone=$this->phone&text=Уважаемая+$this->name+
+напоминаем+вам+что+вы+
+записаны+на+завтра+время+$this->time+не+опаздывайте\"></a>");
+//            ->content("Уважаемая . $this->name ., напоминаем вам что вы записаны на завтра, время . $this->time ., не опаздывайте ");
     }
 }
