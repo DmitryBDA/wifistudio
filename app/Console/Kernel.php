@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\SendReminder;
 use App\Models\Event;
 use App\Models\UserEvent;
 use App\Notifications\Telegram;
@@ -21,7 +22,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        SendReminder::class,
     ];
 
     /**
