@@ -49,27 +49,8 @@ class Kernel extends ConsoleKernel
         })->everyMinute();
 
            */
-        $schedule->call(function () {
-
-            $events = Event::whereDate('start', Carbon::today()->addDay(1))->get();
-
-            foreach ($events as $event)
-            {
-                $user = UserEvent::find($event->user_id);
-
-                if($user){
-                    $phone = str_replace(['(', ')', '-'], '', $user->phone);
-                    $phone = substr($phone, 1);
-                    $name = $user->name;
-                    $day = Carbon::today()->addDay(1);
-                    $date = Date::parse($day)->format('l j F');
-                    $time = str_replace(' ', '+', $date);
-                    $time .= "+$event->title";
-
-                    Notification::route('telegram', config('config_telegram.TELEGRAM_ADMIN_ID'))->notify(new TelegramSendReminder($name, $phone, $time));
-                }
-            }
-        })->timezone('Asia/Irkutsk')->dailyAt('10:00');
+//        $schedule->command('send:reminder')->timezone('Asia/Irkutsk')->dailyAt('10:00');
+        $schedule->command('send:reminder')->everyMinute();
 
 
     }
