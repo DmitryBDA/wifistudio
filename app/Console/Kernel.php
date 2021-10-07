@@ -5,11 +5,13 @@ namespace App\Console;
 use App\Models\Event;
 use App\Models\UserEvent;
 use App\Notifications\Telegram;
+use App\Notifications\TelegramSendReminder;
 use DateTime;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Notification;
+use Jenssegers\Date\Date;
 
 class Kernel extends ConsoleKernel
 {
@@ -30,6 +32,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+  /*
         $schedule->call(function () {
 
             $events = Event::whereDate('updated_at', Carbon::today()->addDay(-21))->get();
@@ -44,6 +47,31 @@ class Kernel extends ConsoleKernel
                 }
             }
         })->everyMinute();
+
+           */
+        $schedule->call(function () {
+
+            $events = Event::whereDate('start', Carbon::today()->addDay(1))->get();
+
+            foreach ($events as $event)
+            {
+                $user = UserEvent::find($event->user_id);
+
+                if($user){
+                    $phone = str_replace(['(', ')', '-'], '', $user->phone);
+                    $phone = substr($phone, 1);
+                    $name = $user->name;
+                    $day = Carbon::today()->addDay(1);
+                    $date = Date::parse($day)->format('l j F');
+                    $time = str_replace(' ', '+', $date);
+                    $time .= "+$event->title";
+
+                    Notification::route('telegram', config('config_telegram.TELEGRAM_ADMIN_ID'))->notify(new TelegramSendReminder($name, $phone, $time));
+                }
+            }
+        })->timezone('Asia/Irkutsk')->dailyAt('10:00');
+
+
     }
 
     /**
