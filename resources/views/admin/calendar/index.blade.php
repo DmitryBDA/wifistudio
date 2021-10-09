@@ -559,7 +559,7 @@
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-1">
-                                <div style="width: 100%;height: 49px;" class="btn-group-vertical">
+                                <div id="list_active_records" style="width: 100%;height: 49px;" class="btn-group-vertical">
                                     <button id="eventsList" type="button" class="btn btn-default">Список дат</button>
                                 </div>
                             </div>

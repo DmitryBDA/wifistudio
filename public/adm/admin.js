@@ -27,6 +27,17 @@ $(document).on('input', '._search_active_record', function (){
         success: (data) => {
 
             $('._users_active_list_wrapper').html(data)
+
+            let elem = $('#list_active_records');
+
+            $('html, body').animate({
+                scrollTop: elem.offset().top
+            }, {
+                duration: 370,   // по умолчанию «400»
+                easing: "linear" // по умолчанию «swing»
+            });
+
+            return false;
         }
     })
 })
