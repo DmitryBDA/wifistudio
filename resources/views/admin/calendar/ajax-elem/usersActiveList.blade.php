@@ -1,3 +1,4 @@
+@if($eventList->isNotEmpty())
 <table class="table">
     <thead>
     <tr>
@@ -21,3 +22,8 @@
     @endforeach
     </tbody>
 </table>
+@else
+    <div class="form-group mt-2 mr-2 ml-2">
+        Совпадений не найдено
+    </div>
+@endif

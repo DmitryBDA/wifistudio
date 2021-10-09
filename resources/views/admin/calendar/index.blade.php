@@ -559,13 +559,13 @@
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-1">
-                                <div id="list_active_records" style="width: 100%;height: 49px;" class="btn-group-vertical">
+                                <div style="width: 100%;height: 49px;" class="btn-group-vertical">
                                     <button id="eventsList" type="button" class="btn btn-default">Список дат</button>
                                 </div>
                             </div>
                             <div class="col-md-11">
                                 <div class="card card-info collapsed-card">
-                                    <div class="card-header">
+                                    <div  id="list_active_records" class="card-header">
                                         <h3 class="card-title">Активные записи</h3>
 
                                         <div class="card-tools">
@@ -577,7 +577,7 @@
                                     </div>
 
                                     <div class="card-body p-0">
-                                        <div class="form-group mt-2">
+                                        <div class="form-group mt-2 mr-2 ml-2">
                                             <input type="text" class="form-control _search_active_record" placeholder="Введите чтобы начать поиск">
                                         </div>
                                         <div class="_users_active_list_wrapper">
