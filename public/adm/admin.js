@@ -11,3 +11,22 @@ $(document).ready(function () {
 
 
 })
+
+$(document).on('input', '._search_active_record', function (){
+    let searchFields = $(this).val();
+
+    $.ajax({
+        url: "/admin/fullcalendar/search",
+        type: "GET",
+        data: {
+            searchFields: searchFields,
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: (data) => {
+
+            $('._users_active_list_wrapper').html(data)
+        }
+    })
+})

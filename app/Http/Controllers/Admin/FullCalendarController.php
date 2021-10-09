@@ -210,6 +210,19 @@ class FullCalendarController extends Controller
     }
 
 
+    public function searchUsers(Request $request){
+        if($request->ajax()){
+            $searchField = $request->get('searchFields');
+
+            $tekDate = Carbon::today()->format('Y-m-d');
+            $eventList = Event::where('status', '!=', 1)->where('start', '>=', $tekDate)->whereHas('user', $filter = function($query) use($searchField) {
+                $query->where('name', 'LIKE', "%$searchField%")
+                ->orWhere('surname', 'LIKE', "%$searchField%");
+            })->with('user')->orderBy('start', 'asc')->get();
+
+            return view('admin.calendar.ajax-elem.usersActiveList', compact('eventList'))->render();
+        }
+    }
 
 
 }

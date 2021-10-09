@@ -575,30 +575,14 @@
                                             </button>
                                         </div>
                                     </div>
+
                                     <div class="card-body p-0">
-                                        <table class="table">
-                                            <thead>
-                                            <tr>
-                                                <th>Дата</th>
-                                                <th>Время</th>
-                                                <th>Имя</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            @foreach($eventList as $event)
-                                                <tr>
-
-                                                    <td>{{ Date::parse($event->start)->format('j.m (D)')}}</td>
-                                                    <td>{{$event->title}}</td>
-                                                    <td>@if($event->user)
-                                                            {{$event->user->name}} {{$event->user->surname}}
-                                                        @endif
-                                                    </td>
-
-                                                </tr>
-                                            @endforeach
-                                            </tbody>
-                                        </table>
+                                        <div class="form-group mt-2">
+                                            <input type="text" class="form-control _search_active_record" placeholder="Введите чтобы начать поиск">
+                                        </div>
+                                        <div class="_users_active_list_wrapper">
+                                            @include('admin.calendar.ajax-elem.usersActiveList')
+                                        </div>
                                     </div>
                                     <!-- /.card-body -->
                                 </div>
