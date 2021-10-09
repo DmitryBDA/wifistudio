@@ -46,10 +46,11 @@ $(document).on('click', '._btn_collapse', function (){
 
     let elem = null
 
-    if($(this).hasClass('fa-plus')){
-        elem = $('#list_active_records');
-    } else {
+    if($(this).find('i').hasClass('fa-plus')){
         elem = $('#fullcalendar_main');
+    } else {
+
+        elem = $('#list_active_records');
     }
 
 

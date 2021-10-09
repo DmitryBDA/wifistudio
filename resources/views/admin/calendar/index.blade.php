@@ -568,10 +568,10 @@
                                     <div  id="list_active_records" class="card-header">
                                         <h3 class="card-title">Активные записи</h3>
 
-                                        <div class="card-tools ">
-                                            <button type="button" class="btn btn-tool " data-card-widget="collapse"
+                                        <div class="card-tools _btn_collapse">
+                                            <button type="button " class="btn btn-tool " data-card-widget="collapse"
                                                     title="Collapse">
-                                                <i class="_btn_collapse fas fa-plus"></i>
+                                                <i class="fas fa-plus"></i>
                                             </button>
                                         </div>
                                     </div>
