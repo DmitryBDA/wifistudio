@@ -97,8 +97,8 @@ class RecordController extends Controller
             }
 
             $event = Event::find($request->id)->update($dataUpdate);
-
-            Notification::route('telegram', config('config_telegram.TELEGRAM_ADMIN_ID'))->notify(new Telegram($user->name));
+            $name = $user->surname . ' ' .  $user->name;
+            Notification::route('telegram', config('config_telegram.TELEGRAM_ADMIN_ID'))->notify(new Telegram($name));
         }
 
 

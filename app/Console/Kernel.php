@@ -33,24 +33,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-  /*
-        $schedule->call(function () {
 
-            $events = Event::whereDate('updated_at', Carbon::today()->addDay(-21))->get();
-
-            foreach ($events as $event)
-            {
-                $user = UserEvent::find($event->user_id);
-
-                if($user->telegram_id){
-
-                    Notification::route('telegram', $user->telegram_id)->notify(new Telegram($user->name));
-                }
-            }
-        })->everyMinute();
-
-           */
         $schedule->command('send:reminder')->timezone('Asia/Irkutsk')->dailyAt('10:00');
+        $schedule->command('get:record')->everyMinute();
 
 
     }
