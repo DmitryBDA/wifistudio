@@ -50,8 +50,7 @@ class Kernel extends ConsoleKernel
         })->everyMinute();
 
            */
-//        $schedule->command('send:reminder')->timezone('Asia/Irkutsk')->dailyAt('10:00');
-        $schedule->command('send:reminder')->everyMinute();
+        $schedule->command('send:reminder')->timezone('Asia/Irkutsk')->dailyAt('10:00');
 
 
     }

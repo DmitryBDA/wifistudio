@@ -7,6 +7,7 @@ use App\Models\UserEvent;
 use App\Notifications\TelegramSendReminder;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use Jenssegers\Date\Date;
 
