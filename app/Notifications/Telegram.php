@@ -19,7 +19,7 @@ class Telegram extends Notification
      *
      * @return void
      */
-    public function __construct($name = null)
+    public function __construct($name)
     {
         $this->nameUser = $name;
     }

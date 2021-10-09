@@ -72,8 +72,7 @@ class RecordController extends Controller
                 'name' => $name,
                 'phone' => $phone,
             ];
-            $user = UserEvent::select('id')->where('phone', $phone)->first();
-
+            $user = UserEvent::select('id', 'name', 'surname')->where('phone', $phone)->first();
 
             if(!empty($user)) {
 
@@ -97,7 +96,8 @@ class RecordController extends Controller
             }
 
             $event = Event::find($request->id)->update($dataUpdate);
-            $name = $user->surname . ' ' .  $user->name;
+            $name =  $user->surname . ' ' . $user->name;
+
             Notification::route('telegram', config('config_telegram.TELEGRAM_ADMIN_ID'))->notify(new Telegram($name));
         }
 
