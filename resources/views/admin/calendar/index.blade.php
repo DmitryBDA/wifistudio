@@ -548,7 +548,7 @@
                     <!-- /.col -->
                     <div class="col-md-9">
                         <div class="card card-primary">
-                            <div class="card-body p-0">
+                            <div id="fullcalendar_main" class="card-body p-0">
                                 <!-- THE CALENDAR -->
                                 <div id="calendar"></div>
                             </div>
@@ -568,10 +568,10 @@
                                     <div  id="list_active_records" class="card-header">
                                         <h3 class="card-title">Активные записи</h3>
 
-                                        <div class="card-tools">
-                                            <button type="button" class="btn btn-tool" data-card-widget="collapse"
+                                        <div class="card-tools ">
+                                            <button type="button" class="btn btn-tool " data-card-widget="collapse"
                                                     title="Collapse">
-                                                <i class="fas fa-plus"></i>
+                                                <i class="_btn_collapse fas fa-plus"></i>
                                             </button>
                                         </div>
                                     </div>

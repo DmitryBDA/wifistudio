@@ -41,3 +41,22 @@ $(document).on('input', '._search_active_record', function (){
         }
     })
 })
+
+$(document).on('click', '._btn_collapse', function (){
+
+    let elem = null
+
+    if($(this).hasClass('fa-plus')){
+        elem = $('#list_active_records');
+    } else {
+        elem = $('#fullcalendar_main');
+    }
+
+
+    $('html, body').animate({
+        scrollTop: elem.offset().top
+    }, {
+        duration: 370,   // по умолчанию «400»
+        easing: "linear" // по умолчанию «swing»
+    });
+})
