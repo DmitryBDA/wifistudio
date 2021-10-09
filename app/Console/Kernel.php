@@ -34,7 +34,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
 
-        $schedule->command('send:reminder')->timezone('Asia/Irkutsk')->dailyAt('10:00');
+        $schedule->command('send:reminder')->timezone('Asia/Irkutsk')->everyMinute();
         $schedule->command('get:record')->everyMinute();
 
 
