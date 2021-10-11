@@ -52,6 +52,23 @@
                         </div>
                     </div>
 
+                    @if($services)
+                    <div class="col-sm-12">
+                        <!-- select -->
+                        <div class="form-group">
+                            <label>Тип услуги</label>
+                            <select class="form-control" required>
+                                <option value="" selected>Не выбрано</option>
+                                @foreach($services as $service)
+                                    <option value="{{$service->id}}">{{$service->name}}</option>
+                                @endforeach
+
+
+                            </select>
+                        </div>
+                    </div>
+                    @endif
+
                 </div>
 
                 <!-- Сообщение -->

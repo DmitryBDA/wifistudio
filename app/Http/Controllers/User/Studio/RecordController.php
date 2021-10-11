@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User\Studio;
 
 use App\Http\Controllers\Controller;
+use App\Models\Service;
 use App\Models\UserEvent;
 use App\Notifications\Sms;
 use App\Notifications\Telegram;
@@ -22,8 +23,9 @@ class RecordController extends Controller
     public function index()
     {
         $event = new Event;
+        $services = Service::all();
 
-        return view('user.record', compact('event'));
+        return view('user.record', compact('event', 'services'));
     }
 
     public function showEvents()
@@ -54,9 +56,9 @@ class RecordController extends Controller
     public function showFormRecord(Request $request){
 
         $event = Event::with('user')->find($request->idEvent);
-
+        $services = Service::all();
         if($request->ajax()){
-            return view('user.ajax-elem.formRecord', compact('event'))->render();
+            return view('user.ajax-elem.formRecord', compact('event', 'services'))->render();
         }
     }
 
