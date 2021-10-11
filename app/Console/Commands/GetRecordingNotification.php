@@ -45,22 +45,23 @@ class GetRecordingNotification extends Command
      */
     public function handle()
     {
-      $events = Event::whereDate('start', Carbon::today()->addDay(-21))->get();
+        $events = Event::whereDate('start', Carbon::today()->addDay(-21))->get();
 
-      foreach ($events as $event)
-      {
-          $user = UserEvent::find($event->user_id);
+        foreach ($events as $event) {
+            $user = UserEvent::find($event->user_id);
 
-          if ($user) {
-              $phone = str_replace(['(', ')', '-'], '', $user->phone);
-              $phone = substr($phone, 1);
-              $name = $user->name;
+            if ($user) {
 
+                $nextEvent = Event::whereDate('start', '>', Carbon::today()->addDay(-21))->where('user_id', $user->id)->get();
 
-              Notification::route('telegram', config('config_telegram.TELEGRAM_ADMIN_ID'))->notify(new TelegramRecordingNotification($name, $phone));
-          }
+                if ($nextEvent->isEmpty()) {
+                    $phone = str_replace(['(', ')', '-'], '', $user->phone);
+                    $phone = substr($phone, 1);
+                    $name = $user->name;
 
-
-      }
+                    Notification::route('telegram', config('config_telegram.TELEGRAM_ADMIN_ID'))->notify(new TelegramRecordingNotification($name, $phone));
+                }
+            }
+        }
     }
 }
