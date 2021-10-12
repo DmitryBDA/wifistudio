@@ -11,7 +11,7 @@ class Event extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title','start','end','status','allDay','user_id'
+        'title','start','end','status','allDay','user_id', 'service_id'
     ];
 
     public function setAttr($name, $value)
@@ -22,6 +22,11 @@ class Event extends Model
     public function user()
     {
         return $this->hasOne(UserEvent::class, 'id','user_id');
+    }
+
+    public function service()
+    {
+        return $this->hasOne(Service::class, 'id','service_id');
     }
 
     public function getStartAttribute($value)

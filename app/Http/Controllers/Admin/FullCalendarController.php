@@ -192,7 +192,7 @@ class FullCalendarController extends Controller
 
     public function showModalAction(Request $request){
 
-        $event = Event::with('user')->find($request->idEvent);
+        $event = Event::with('user')->with('service')->find($request->idEvent);
 
         if($request->ajax()){
             return view('admin.calendar.ajax-elem.actionEvents', compact('event'))->render();
