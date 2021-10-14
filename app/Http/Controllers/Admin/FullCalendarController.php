@@ -209,6 +209,15 @@ class FullCalendarController extends Controller
         return response()->json($data);
     }
 
+    public function addEvents(Request $request)
+    {
+      if($request->ajax()){
+
+        $dateRecord = $request->get('start');
+
+        return view('admin.calendar.ajax-elem.addEventsTime', compact('dateRecord'))->render();
+      }
+    }
 
     public function searchUsers(Request $request){
         if($request->ajax()){

@@ -8,17 +8,12 @@
                 </button>
             </div>
             <div id="bodyForAddEventsTime" class="modal-body">
-                <form id="addEventsNewTime" data-start="" data-end="" class="form-horizontal">
 
                 @include('admin.calendar.ajax-elem.addEventsTime')
-                <!-- /.card-footer -->
-                </form>
 
             </div>
         </div>
-        <!-- /.modal-content -->
     </div>
-    <!-- /.modal-dialog -->
 </div>
 <button id="showAddEventsTime" style="display: none;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-primary">
     Launch Primary Modal
