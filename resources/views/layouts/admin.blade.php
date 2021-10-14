@@ -204,7 +204,7 @@
             <!-- SidebarSearch Form -->
             <div class="form-inline">
                 <div class="input-group" data-widget="sidebar-search">
-                    <input class="form-control form-control-sidebar" type="search" placeholder="Search"
+                    <input id="testsearch" class="form-control form-control-sidebar" type="search" placeholder="Search"
                            aria-label="Search">
                     <div class="input-group-append">
                         <button class="btn btn-sidebar">
@@ -271,6 +271,40 @@
 <script src="/adm/dist/js/demo.js"></script>
 <script src="/adm/jquery.maskedinput.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.4.0/clipboard.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script>
+
+<script type="text/javascript">
+
+  const autocompletesurname = () => {
+    var path = "{{ route('search.autocompilationsurname') }}";
+    $('#add_surname').typeahead({
+      minLength: 2,
+      source:  function (query2, process) {
+        return $.get(path, { query2: query2 }, function (data) {
+          return process(data);
+        });
+      }
+    });
+  }
+
+  const autocompletename = () => {
+    var path = "{{ route('search.autocompilation') }}";
+    $('#add_name').typeahead({
+      minLength: 2,
+      source:  function (query, process) {
+        return $.get(path, { query: query }, function (data) {
+          return process(data);
+        });
+      }
+    });
+  }
+
+
+
+
+</script>
+
 <script>
     (function(){
         new Clipboard('#copy-button');

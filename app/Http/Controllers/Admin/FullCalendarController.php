@@ -237,5 +237,26 @@ class FullCalendarController extends Controller
     }
   }
 
+  public function searchAutocompilation(Request $request)
+  {
+    $result = UserEvent::select('name')->where('name', 'LIKE', "%{$request->input('query')}%")->get();
+    $arr = [];
+    foreach ($result as $item)
+    {
+      $arr[]['name'] = $item->name;
+    }
+    return response()->json($arr);
+  }
+ public function searchAutocompilationSurname(Request $request)
+  {
+    $result = UserEvent::select('surname')->where('surname', 'LIKE', "%{$request->input('query2')}%")->get();
+    $arr = [];
+    foreach ($result as $item)
+    {
+      $arr[]['name'] = $item->surname;
+    }
+    return response()->json($arr);
+  }
+
 
 }

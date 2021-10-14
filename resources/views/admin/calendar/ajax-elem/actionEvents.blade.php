@@ -20,10 +20,10 @@
         <div>
           <div class="row">
             <div class="form-group">
-              <input type="text" class="form-control" name="surname" placeholder="Фамилия" required>
+              <input id="add_surname" type="text" class="form-control" name="surname" placeholder="Фамилия" autocomplete="off" required>
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" name="name" placeholder="Имя" required>
+              <input id="add_name" type="text" class="form-control" name="name" placeholder="Имя" autocomplete="off" required>
             </div>
             <div class="form-group">
               <input id="phone" class="form-control" type="text" name="phone"  placeholder="Телефон" required>

@@ -232,6 +232,10 @@ $(function () {
             });
           })
 
+          autocompletename()
+
+          autocompletesurname()
+
           $('#btn-from-chose').click();
 
         }
