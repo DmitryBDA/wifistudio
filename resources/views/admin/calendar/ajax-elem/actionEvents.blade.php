@@ -18,9 +18,26 @@
                type="button" name="confirm" class="btn btn-outline-light" value="Подтвердить">
     @elseif($event->status == 1)
         <div>
-            <input type="text" name="surname" placeholder="Фамилия" required>
-            <input type="text" name="name" placeholder="Имя" required>
-            <input id="phone" type="text" name="phone"  placeholder="Телефон" required>
+          <div class="row">
+            <div class="form-group">
+              <input type="text" class="form-control" name="surname" placeholder="Фамилия" required>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" name="name" placeholder="Имя" required>
+            </div>
+            <div class="form-group">
+              <input id="phone" class="form-control" type="text" name="phone"  placeholder="Телефон" required>
+            </div>
+            <div class="form-group">
+              <select name="service" class="form-control" required>
+                <option value="" selected>Не выбрано</option>
+                @foreach($services as $service)
+                  <option value="{{$service->id}}">{{$service->name}}</option>
+                @endforeach
+              </select>
+            </div>
+          </div>
+
         </div>
         <input data-idEvent="{{$event->id}}"
                id="record"
