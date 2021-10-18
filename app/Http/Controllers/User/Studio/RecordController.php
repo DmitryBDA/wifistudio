@@ -17,6 +17,7 @@ use App\Models\Event;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Notification;
+use Jenssegers\Date\Date;
 
 class RecordController extends Controller
 {
@@ -75,7 +76,7 @@ class RecordController extends Controller
                 'name' => $name,
                 'phone' => $phone,
             ];
-            $user = UserEvent::select('id', 'name', 'surname')->where('phone', $phone)->first();
+            $user = UserEvent::select('id', 'name', 'surname', 'phone')->where('phone', $phone)->first();
 
             if(!empty($user)) {
 
@@ -100,10 +101,19 @@ class RecordController extends Controller
                 ];
             }
 
-            $event = Event::find($request->id)->update($dataUpdate);
+            $event = Event::find($request->id);
+            $event->update($dataUpdate);
             $name =  $user->surname . ' ' . $user->name;
 
-            Notification::route('telegram', config('config_telegram.TELEGRAM_ADMIN_ID'))->notify(new Telegram($name));
+            $phone = str_replace(['(', ')', '-'], '', $user->phone);
+            $phone = substr($phone, 1);
+            $name = $user->name;
+            $day = Carbon::today()->addDay(1);
+            $date = Date::parse($day)->format('l j F');
+            $time = str_replace(' ', '+', $date);
+            $time .= "+$event->title";
+
+            Notification::route('telegram', config('config_telegram.TELEGRAM_ADMIN_ID'))->notify(new Telegram($name, $phone, $time ));
         }
 
 

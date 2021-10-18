@@ -12,17 +12,21 @@ use NotificationChannels\Telegram\TelegramChannel;
 class Telegram extends Notification
 {
     use Queueable;
-    protected $nameUser;
+    protected $name;
+    protected $phone;
+    protected $time;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($name)
-    {
-        $this->nameUser = $name;
-    }
+  public function __construct($name, $phone, $time)
+  {
+    $this->name = $name;
+    $this->phone = $phone;
+    $this->time = $time;
+  }
 
     /**
      * Get the notification's delivery channels.
@@ -66,7 +70,9 @@ class Telegram extends Notification
     {
 
         return TelegramMessage::create()
-            ->content("Новая запись. $this->nameUser ");
+          ->content("Новая запись " . $this->name)
+          ->button( 'отправить уведомление', "https://api.whatsapp.com/send/?phone=7$this->phone&text=Здравствуйте,+$this->name!+Вы+записаны+на+маникюр+$this->time.+Адрес:+г.Иркутск,+ул.+Советская+109,+офис+314.+(Вход+в+белую+дверь,+над+дверью+вывеска+-+Иркутский+Дом+Печати).+Ваш+мастер:+Белоусова+Кристина.");
+
 
     }
 }
