@@ -108,7 +108,7 @@ class RecordController extends Controller
             $phone = str_replace(['(', ')', '-'], '', $user->phone);
             $phone = substr($phone, 1);
             $name = $user->name;
-            $day = Carbon::today()->addDay(1);
+            $day = Carbon::create($event->start);
             $date = Date::parse($day)->format('l j F');
             $time = str_replace(' ', '+', $date);
             $time .= "+$event->title";
