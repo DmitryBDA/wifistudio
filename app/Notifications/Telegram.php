@@ -71,7 +71,7 @@ class Telegram extends Notification
 
         return TelegramMessage::create()
           ->content("Новая запись " . $this->name)
-          ->button( 'отправить уведомление', "https://api.whatsapp.com/send/?phone=7$this->phone&text=Здравствуйте,+$this->name!+Вы+записаны+на+маникюр+$this->time.+Адрес:+г.Иркутск,+ул.+Советская+109,+офис+314.+(Вход+в+белую+дверь,+над+дверью+вывеска+-+Иркутский+Дом+Печати).+Ваш+мастер:+Белоусова+Кристина.");
+          ->button( 'отправить уведомление', "https://api.whatsapp.com/send/?phone=7$this->phone&text=Здравствуйте,+$this->name!+Вы+записаны+на+маникюр+$this->time.+Ваш+мастер:+Белоусова+Кристина.");
 
 
     }
