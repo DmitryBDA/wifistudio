@@ -11,6 +11,19 @@
             <span>@if($event->user){{$event->user->phone}} @endif</span></label></div>
 
 </div>
+
+@if(isset($moreRecords) and !empty($moreRecords))
+  <div class="modal-footer justify-content-between">
+    <h5>Также записан</h5>
+    @foreach($moreRecords as $item)
+      <div style="width: 100%;">
+          <span>Дата: {{ Date::parse($item->start)->format('j.m')}}</span> Время:<span> {{$item->title}}</span>
+      </div>
+    @endforeach
+  </div>
+@endif
+
+
 <div class="modal-footer justify-content-between">
     @if($event->status == 2)
         <input data-idEvent="{{$event->id}}"

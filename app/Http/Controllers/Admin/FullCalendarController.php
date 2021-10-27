@@ -195,9 +195,19 @@ class FullCalendarController extends Controller
   {
 
     $event = Event::with('user')->with('service')->find($request->idEvent);
+
+    $userId = $event->user_id;
+    $tekDate = Carbon::today()->format('Y-m-d');
+    $eventList = Event::where('start', '>=', $tekDate)->where('user_id', $userId)->where('id', '!=',$event->id)->with('user')->orderBy('start', 'asc')->get();
+
+    if($eventList->count()){
+      $moreRecords = $eventList;
+    } else {
+      $moreRecords = '';
+    }
     $services = Service::all();
     if ($request->ajax()) {
-      return view('admin.calendar.ajax-elem.actionEvents', compact('event', 'services'))->render();
+      return view('admin.calendar.ajax-elem.actionEvents', compact('event', 'services', 'moreRecords'))->render();
     }
   }
 
