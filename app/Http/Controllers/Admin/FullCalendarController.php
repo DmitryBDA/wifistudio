@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Service;
+use App\Repositories\EventRepository;
+use App\Repositories\ServiceRepository;
 use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\UserEvent;
@@ -11,16 +13,23 @@ use Illuminate\Support\Carbon;
 
 class FullCalendarController extends Controller
 {
+  protected $eventRepository;
+  protected $servicesRepository;
+
+  public function __construct()
+  {
+    $this->eventRepository = app(EventRepository::class);
+    $this->servicesRepository = app(ServiceRepository::class);
+  }
+
   public function index()
   {
-    $tekDate = Carbon::today()->format('Y-m-d');
-    $eventList = Event::where('status', '!=', 1)->where('start', '>=', $tekDate)->with('user')->orderBy('start', 'asc')->get();
+    //Получить все записи (события)
+    $eventList = $this->eventRepository->getActiveRecords();
+    //Получить все услуги
+    $services = $this->servicesRepository->getAll();
 
-    $event = new Event;
-    $services = Service::all();
-    //$event = Event::with('user')->find(7);
-
-    return view('admin.calendar.index', compact('event', 'eventList','services'));
+    return view('admin.calendar.index', compact('eventList','services'));
   }
 
   public function showEvents()
@@ -197,10 +206,13 @@ class FullCalendarController extends Controller
     $event = Event::with('user')->with('service')->find($request->idEvent);
 
     $userId = $event->user_id;
-    $tekDate = Carbon::today()->format('Y-m-d');
-    $eventList = Event::where('start', '>=', $tekDate)->where('user_id', $userId)->where('id', '!=',$event->id)->with('user')->orderBy('start', 'asc')->get();
+    if($userId){
+      $tekDate = Carbon::today()->format('Y-m-d');
+      $eventList = Event::where('start', '>=', $tekDate)->where('user_id', $userId)->where('id', '!=',$event->id)->with('user')->orderBy('start', 'asc')->get();
+    }
 
-    if($eventList->count()){
+
+    if(isset($eventList) and $eventList->isNotEmpty() ){
       $moreRecords = $eventList;
     } else {
       $moreRecords = '';
