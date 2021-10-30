@@ -1,4 +1,4 @@
-@extends('layouts.user')
+@extends('layouts.public')
 
 @section('title', 'Главная')
 
@@ -12,264 +12,198 @@
 
 @section('content')
 
-    <!-- HOME SLIDER -->
-    <div class="slider-wrap home-1-slider" id="home">
-        <div id="mainSlider" class="nivoSlider slider-image">
-            <img src="/user/img/home2/1.jpg" alt="main slider" title="#htmlcaption1"/>
-            <img src="/user/img/home2/2.jpg" alt="main slider" title="#htmlcaption2"/>
+  <!-- About-->
+  <section class="page-section bg-primary" id="about">
+    <div class="container px-4 px-lg-5">
+      <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-lg-8 text-center">
+          <h2 class="text-white mt-0">We've got what you need!</h2>
+          <hr class="divider divider-light" />
+          <p class="text-white-75 mb-4">Start Bootstrap has everything you need to get your new website up and running in no time! Choose one of our open source, free to download, and easy to use themes! No strings attached!</p>
+          <a class="btn btn-light btn-xl" href="#services">Get Started!</a>
         </div>
-        <div id="htmlcaption1" class="nivo-html-caption slider-caption-1">
-            <div class="slider-progress"></div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="slide1-text slide-text">
-                            <div class="middle-text">
-                                <div class="left_sidet2">
-                                    <div class="cap-title slide2 wow slideInDown" data-wow-duration=".9s" data-wow-delay="0s">
-                                        <h1>Enjo<span>Y</span></h1>
-                                    </div>
-                                </div>
-                                <div class="rigth_sidet2">
-                                    <div class="cap-dec slide2 wow slideInRight" data-wow-duration="1.1s" data-wow-delay="0s">
-                                        <h2>Liendo multipurpose</h2><h2>business themplate</h2>
-                                    </div>
-                                    <div class="cap-readmore animated fadeInUpBig" data-wow-duration="1.5s" data-wow-delay=".5s">
-                                        <a href="#">Buy now</a>
-                                        <a href="#" class="hover_slider_button">Shop Now</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="htmlcaption2" class="nivo-html-caption slider-caption-2">
-            <div class="slider-progress"></div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="slide2-text slide-text">
-                            <div class="middle-text">
-                                <div class="rigth_sidet width_100">
-                                    <div class="cap-title slideh1 wow slideInRight" data-wow-duration=".9s" data-wow-delay="0s">
-                                        <h1>How to <span class="slide_color">start</span> your own business</h1>
-                                    </div>
-                                    <div class="cap-dec slide2 slideh1 wow slideInRight" data-wow-duration="1.1s" data-wow-delay="0s">
-                                        <h2>EXPERIENCE THE CLEAN </h2><br /><h2>AND UNIQUE ONE PAGE DESIGN</h2>
-                                    </div>
-                                    <div class="cap-readmore animated fadeInUpBig" data-wow-duration="1.5s" data-wow-delay=".5s">
-                                        <a href="#" >Buy now</a>
-                                        <a href="#" class="hover_slider_button">Shop Now</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+      </div>
     </div>
-    <!-- HOME SLIDER -->
-    <!-- about  area -->
-    <div class="about_area" id="about">
-        <div class="container">
-            <div class="row">
-                <!--section title-->
-                <div class="col-md-12 col-sm-12 col-lg-12">
-                    <div class="section_title">
-                        <h2 class="title">About</h2>
-                        <span class="title-border"></span>
-                    </div>
-                </div>
-                <!--end section title-->
-            </div>
-            <div class="row">
-                <!--single Item-->
-                <div class="col-sm-6 col-md-3 col-lg-3">
-                    <div class="icon"><i class="fa fa-lightbulb-o "></i></div>
-                    <div class="about_content">
-                        <h2><span>Clean design</span></h2>
-                        <p>Maecenas efficitur et erat at mattis. Nullam finibus massa nec augue ullamcorper, </p>
-                    </div>
-                </div>
-                <!--single Item-->
-                <div class="col-sm-6 col-md-3 col-lg-3">
-                    <div class="icon"><i class="fa fa-html5"></i></div>
-                    <div class="about_content">
-                        <h2><span>Html5 & CSS3</span></h2>
-                        <p>Praesent ornare ipsum at nulla pulvinar, imperdiet hendrerit dui suscipit. Aenean</p>
-                    </div>
-                </div>
-                <!--single Item-->
-                <div class="col-sm-6 col-md-3 col-lg-3">
-                    <div class="icon"><i class="fa fa-cog"></i></div>
-                    <div class="about_content">
-                        <h2><span>Easy Customization</span></h2>
-                        <p>Vestibulum eget enim consequat neque iaculis mattis ac quis nunc. Aenean </p>
-                    </div>
-                </div>
-                <!--single Item-->
-                <div class="col-sm-6 col-md-3 col-lg-3">
-                    <div class="icon">
-                        <i class="fa fa-laptop"></i>
-                    </div>
-                    <div class="about_content">
-                        <h2><span>Responsive Design</span></h2>
-                        <p>Etiam dolor quam, maximus vitae quam a, cursus dictum nibh. Vivamus a ex tellus.  </p>
-                    </div>
-                </div>
-                <!-- end single Item-->
-            </div>
+  </section>
+  <!-- Services-->
+  <section class="page-section" id="services">
+    <div class="container px-4 px-lg-5">
+      <h2 class="text-center mt-0">At Your Service</h2>
+      <hr class="divider" />
+      <div class="row gx-4 gx-lg-5">
+        <div class="col-lg-3 col-md-6 text-center">
+          <div class="mt-5">
+            <div class="mb-2"><i class="bi-gem fs-1 text-primary"></i></div>
+            <h3 class="h4 mb-2">Sturdy Themes</h3>
+            <p class="text-muted mb-0">Our themes are updated regularly to keep them bug free!</p>
+          </div>
         </div>
-    </div>
-    <!-- end about  area -->
-    <!-- gallery  area -->
-    <div class="gallery_area" id="work">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-6 col-lg-6">
-                    <div class="row">
-                        <!-- Tab panes -->
-                        <div class="tab-content margin_topg">
-
-                            <div class="tab-pane active in" id="p1">
-                                <div class="gallery_owl gallary curosel-style">
-                                    <div class="gellary_thum">
-                                        <img src="/user/img/home2/tab/t1.jpg" alt="" />
-                                    </div>
-                                    <div class="gellary_thum">
-                                        <img src="/user/img/home2/tab/t3.jpg" alt="" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane" id="p2">
-                                <div class="gallery_owl gallary curosel-style">
-                                    <div class="gellary_thum">
-                                        <img src="/user/img/home2/tab/t3.jpg" alt="" />
-                                    </div>
-                                    <div class="gellary_thum">
-                                        <img src="/user/img/home2/tab/t5.jpg" alt="" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane" id="p3">
-                                <div class="gallery_owl gallary curosel-style">
-                                    <div class="gellary_thum">
-                                        <img src="/user/img/home2/tab/t6.jpg" alt="" />
-                                    </div>
-                                    <div class="gellary_thum">
-                                        <img src="/user/img/home2/tab/t7.jpg" alt="" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane" id="p4">
-                                <div class="gallery_owl gallary curosel-style">
-                                    <div class="gellary_thum">
-                                        <img src="/user/img/home2/tab/t3.jpg" alt="" />
-                                    </div>
-                                    <div class="gellary_thum">
-                                        <img src="/user/img/home2/tab/t4.jpg" alt="" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane" id="p5">
-                                <div class="gallery_owl gallary curosel-style">
-                                    <div class="gellary_thum">
-                                        <img src="/user/img/home2/tab/t1.jpg" alt="" />
-                                    </div>
-                                    <div class="gellary_thum">
-                                        <img src="/user/img/home2/tab/t7.jpg" alt="" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane" id="p6">
-                                <div class="gallery_owl gallary curosel-style">
-                                    <div class="gellary_thum">
-                                        <img src="/user/img/home2/tab/t3.jpg" alt="" />
-                                    </div>
-                                    <div class="gellary_thum">
-                                        <img src="/user/img/home2/tab/t5.jpg" alt="" />
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-6">
-                    <div class="row">
-                        <div class="gellary col-md-9">
-                            <h2><span>our</span> gallery Projects</h2>
-                            <!-- Nav tabs -->
-                            <ul class="nav nav-tabs nav-style">
-                                <li class="active"><a href="#p1" data-toggle="tab"><img src="/user/img/home2/tab/st1.png" alt="" /></a></li>
-                                <li><a href="#p2" data-toggle="tab"><img src="/user/img/home2/tab/st2.png" alt="" /></a></li>
-                                <li><a href="#p3" data-toggle="tab"><img src="/user/img/home2/tab/st3.png" alt="" /></a></li>
-                                <li><a href="#p4" data-toggle="tab"><img src="/user/img/home2/tab/st4.png" alt="" /></a></li>
-                                <li><a href="#p5" data-toggle="tab"><img src="/user/img/home2/tab/st5.png" alt="" /></a></li>
-                                <li><a href="#p6" data-toggle="tab"><img src="/user/img/home2/tab/st5.png" alt="" /></a></li>
-                                <li><a href="#p3" data-toggle="tab"><img src="/user/img/home2/tab/st4.png" alt="" /></a></li>
-                                <li><a href="#p1" data-toggle="tab"><img src="/user/img/home2/tab/st3.png" alt="" /></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="col-lg-3 col-md-6 text-center">
+          <div class="mt-5">
+            <div class="mb-2"><i class="bi-laptop fs-1 text-primary"></i></div>
+            <h3 class="h4 mb-2">Up to Date</h3>
+            <p class="text-muted mb-0">All dependencies are kept current to keep things fresh.</p>
+          </div>
         </div>
-    </div>
-    <!-- end gallery  area -->
-
-
-    <div class="footer_area " id="contact">
-        <div class="container">
-            <div class="row">
-                <!--section title-->
-                <div class="col-md-12">
-                    <div class="section_title service_color">
-                        <h2 class="title title2">Contact with US</h2>
-                        <span class="title-border"></span>
-                    </div>
-                </div>
-                <!--end section title-->
-            </div>
-            <div class="row">
-
-                <div class="col-md-6">
-                    <div class="map">
-                        <!-- Start contact-map -->
-                        <div class="contact-map">
-                            <div id="googleMap"></div>
-                        </div>
-                        <!-- End contact-map -->
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <form action="mail.php" method="post">
-                        <div class="contract_us">
-                            <div class="inputt input_change">
-                                <span class="message_icon"><i class="fa fa-user"></i></span>
-                                <input type="text" name="name" class="form-control" id="name" placeholder="Name" required>
-                            </div>
-                            <div class="inputt input_change">
-                                <span class="message_icon"><i class="fa fa-envelope-o"></i></span>
-                                <input type="email" name="email" class="form-control" id="email" placeholder="Email" required>
-                            </div>
-                            <div class="inputt">
-                                <span class="message_icon"><i class="fa fa-external-link"></i></span>
-                                <textarea class="form-control" name="message" rows="4" id="mes" placeholder="Message"></textarea>
-                            </div>
-                            <div class="sunmite_button">
-                                <button type="submit" name="ok">send message</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+        <div class="col-lg-3 col-md-6 text-center">
+          <div class="mt-5">
+            <div class="mb-2"><i class="bi-globe fs-1 text-primary"></i></div>
+            <h3 class="h4 mb-2">Ready to Publish</h3>
+            <p class="text-muted mb-0">You can use this design as is, or you can make changes!</p>
+          </div>
         </div>
+        <div class="col-lg-3 col-md-6 text-center">
+          <div class="mt-5">
+            <div class="mb-2"><i class="bi-heart fs-1 text-primary"></i></div>
+            <h3 class="h4 mb-2">Made with Love</h3>
+            <p class="text-muted mb-0">Is it really open source if it's not made with love?</p>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
+  <!-- Portfolio-->
+  <div id="portfolio">
+    <div class="container-fluid p-0">
+      <div class="row g-0">
+        <div class="col-lg-4 col-sm-6">
+          <a class="portfolio-box" href="assets/img/portfolio/fullsize/1.jpg" title="Project Name">
+            <img class="img-fluid" src="assets/img/portfolio/thumbnails/1.jpg" alt="..." />
+            <div class="portfolio-box-caption">
+              <div class="project-category text-white-50">Category</div>
+              <div class="project-name">Project Name</div>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <a class="portfolio-box" href="assets/img/portfolio/fullsize/2.jpg" title="Project Name">
+            <img class="img-fluid" src="assets/img/portfolio/thumbnails/2.jpg" alt="..." />
+            <div class="portfolio-box-caption">
+              <div class="project-category text-white-50">Category</div>
+              <div class="project-name">Project Name</div>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <a class="portfolio-box" href="assets/img/portfolio/fullsize/3.jpg" title="Project Name">
+            <img class="img-fluid" src="assets/img/portfolio/thumbnails/3.jpg" alt="..." />
+            <div class="portfolio-box-caption">
+              <div class="project-category text-white-50">Category</div>
+              <div class="project-name">Project Name</div>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <a class="portfolio-box" href="assets/img/portfolio/fullsize/4.jpg" title="Project Name">
+            <img class="img-fluid" src="assets/img/portfolio/thumbnails/4.jpg" alt="..." />
+            <div class="portfolio-box-caption">
+              <div class="project-category text-white-50">Category</div>
+              <div class="project-name">Project Name</div>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <a class="portfolio-box" href="assets/img/portfolio/fullsize/5.jpg" title="Project Name">
+            <img class="img-fluid" src="assets/img/portfolio/thumbnails/5.jpg" alt="..." />
+            <div class="portfolio-box-caption">
+              <div class="project-category text-white-50">Category</div>
+              <div class="project-name">Project Name</div>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <a class="portfolio-box" href="assets/img/portfolio/fullsize/6.jpg" title="Project Name">
+            <img class="img-fluid" src="assets/img/portfolio/thumbnails/6.jpg" alt="..." />
+            <div class="portfolio-box-caption p-3">
+              <div class="project-category text-white-50">Category</div>
+              <div class="project-name">Project Name</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Call to action-->
+  <section class="page-section bg-dark text-white">
+    <div class="container px-4 px-lg-5 text-center">
+      <h2 class="mb-4">Free Download at Start Bootstrap!</h2>
+      <a class="btn btn-light btn-xl" href="https://startbootstrap.com/theme/creative/">Download Now!</a>
+    </div>
+  </section>
+  <!-- Contact-->
+  <section class="page-section" id="contact">
+    <div class="container px-4 px-lg-5">
+      <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-lg-8 col-xl-6 text-center">
+          <h2 class="mt-0">Let's Get In Touch!</h2>
+          <hr class="divider" />
+          <p class="text-muted mb-5">Ready to start your next project with us? Send us a messages and we will get back to you as soon as possible!</p>
+        </div>
+      </div>
+      <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
+        <div class="col-lg-6">
+          <!-- * * * * * * * * * * * * * * *-->
+          <!-- * * SB Forms Contact Form * *-->
+          <!-- * * * * * * * * * * * * * * *-->
+          <!-- This form is pre-integrated with SB Forms.-->
+          <!-- To make this form functional, sign up at-->
+          <!-- https://startbootstrap.com/solution/contact-forms-->
+          <!-- to get an API token!-->
+          <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+            <!-- Name input-->
+            <div class="form-floating mb-3">
+              <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
+              <label for="name">Full name</label>
+              <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+            </div>
+            <!-- Email address input-->
+            <div class="form-floating mb-3">
+              <input class="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
+              <label for="email">Email address</label>
+              <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
+              <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+            </div>
+            <!-- Phone number input-->
+            <div class="form-floating mb-3">
+              <input class="form-control" id="phone" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
+              <label for="phone">Phone number</label>
+              <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
+            </div>
+            <!-- Message input-->
+            <div class="form-floating mb-3">
+              <textarea class="form-control" id="message" type="text" placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required"></textarea>
+              <label for="message">Message</label>
+              <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
+            </div>
+            <!-- Submit success message-->
+            <!---->
+            <!-- This is what your users will see when the form-->
+            <!-- has successfully submitted-->
+            <div class="d-none" id="submitSuccessMessage">
+              <div class="text-center mb-3">
+                <div class="fw-bolder">Form submission successful!</div>
+                To activate this form, sign up at
+                <br />
+                <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
+              </div>
+            </div>
+            <!-- Submit error message-->
+            <!---->
+            <!-- This is what your users will see when there is-->
+            <!-- an error submitting the form-->
+            <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
+            <!-- Submit Button-->
+            <div class="d-grid"><button class="btn btn-primary btn-xl disabled" id="submitButton" type="submit">Submit</button></div>
+          </form>
+        </div>
+      </div>
+      <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-lg-4 text-center mb-5 mb-lg-0">
+          <i class="bi-phone fs-2 mb-3 text-muted"></i>
+          <div>+1 (555) 123-4567</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
 @endsection
