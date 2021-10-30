@@ -68,7 +68,7 @@ Route::middleware(['role:admin'])->prefix('admin')->group(function () {
     Route::get('/fullcalendar/autocomplete-surname',[App\Http\Controllers\Admin\FullCalendarController::class, 'searchAutocompilationSurname'])->name('search.autocompilationsurname');
     Route::post('/fullcalendar/search-phone',[App\Http\Controllers\Admin\FullCalendarController::class, 'searchPhone'])->name('search.phone');
 
-
+    Route::get('/finance',[App\Http\Controllers\Admin\FinanceController::class,'finance'])->name('finance');
 });
 //Notification::route('telegram', '599738652')
 //    ->notify(new Telegram);
