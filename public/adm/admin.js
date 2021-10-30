@@ -61,3 +61,31 @@ $(document).on('click', '._btn_collapse', function (){
         easing: "linear" // по умолчанию «swing»
     });
 })
+
+$(document).on('focusout', '#add_surname, #add_name', function (){
+  surname = $('#add_surname').val();
+  name = $('#add_name').val();
+
+  if(!isEmpty(name) && !isEmpty(surname)){
+    $.ajax({
+      url: "/admin/fullcalendar/search-phone",
+      type: "post",
+      data: {
+        surname: surname,
+        name: name,
+      },
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      success: (data) => {
+        if(data != 'error'){
+          $('#phone').val(data);
+        }
+
+      }
+    })
+  }
+})
+function isEmpty(str) {
+  return (!str || 0 === str.length);
+}

@@ -66,6 +66,7 @@ Route::middleware(['role:admin'])->prefix('admin')->group(function () {
     Route::get('/fullcalendar/autocomplete',[App\Http\Controllers\Admin\FullCalendarController::class, 'searchAutocompilation'])->name('search.autocompilation');
 
     Route::get('/fullcalendar/autocomplete-surname',[App\Http\Controllers\Admin\FullCalendarController::class, 'searchAutocompilationSurname'])->name('search.autocompilationsurname');
+    Route::post('/fullcalendar/search-phone',[App\Http\Controllers\Admin\FullCalendarController::class, 'searchPhone'])->name('search.phone');
 
 
 });
