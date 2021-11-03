@@ -68,10 +68,15 @@ class Telegram extends Notification
 
     public function toTelegram($notifiable)
     {
-
+      $arMessage = [
+        "https://api.whatsapp.com/send/?phone=7$this->phone&text=Здравствуйте,", "$this->name!\nВы",
+        "записаны", "на", "маникюр","$this->time.\nВаш",
+        "мастер:", "Белоусова", "Кристина."
+      ];
+      $textMessage = implode('+',$arMessage);
         return TelegramMessage::create()
           ->content("Новая запись " . $this->name)
-          ->button( 'отправить уведомление', "https://api.whatsapp.com/send/?phone=7$this->phone&text=Здравствуйте,+$this->name!+Вы+записаны+на+маникюр+$this->time.+Ваш+мастер:+Белоусова+Кристина.");
+          ->button( 'отправить уведомление', $textMessage);
 
 
     }

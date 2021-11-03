@@ -60,7 +60,7 @@ class TelegramRecordingNotification extends Notification
     public function toTelegram($notifiable)
     {
         $arMessage = [
-          "https://api.whatsapp.com/send/?phone=7$this->phone&text=Добрый","день,", "$this->nameUser!\nНапоминаю,",
+          "https://api.whatsapp.com/send/?phone=7$this->phone&text=Здравствуйте,", "$this->nameUser!\nНапоминаю,",
           "что", "подошел", "срок","записи", "на", "маникюр.\nЗаписаться",
           "вы", "можете", "по", "ссылке,", "выбрав", "удобную", "дату","и",
           "время.\nhttps://www.bykristy.site/record\nВаш",
