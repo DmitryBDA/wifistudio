@@ -59,8 +59,16 @@ class TelegramRecordingNotification extends Notification
      */
     public function toTelegram($notifiable)
     {
+        $arMessage = [
+          "https://api.whatsapp.com/send/?phone=7$this->phone&text=Добрый","день,", "$this->nameUser!\nНапоминаю,",
+          "что", "подошел", "срок","записи", "на", "маникюр.\nЗаписаться",
+          "вы", "можете", "по", "ссылке,", "выбрав", "удобную", "дату","и",
+          "время.\nhttps://www.bykristy.site/record\nВаш",
+          "мастер:", "Белоусова", "Кристина."
+        ];
+        $textMessage = implode('+',$arMessage);
         return TelegramMessage::create()
-            ->button($this->nameUser, "https://api.whatsapp.com/send/?phone=7$this->phone&text=Добрый+день,+$this->nameUser!+Напоминаю,+что+подошел+срок+записи+на+маникюр.+Ваш+мастер:+Белоусова+Кристина.")
+            ->button($this->nameUser, $textMessage)
             ->content("Напомнить клиенту о корекции");
     }
 }
