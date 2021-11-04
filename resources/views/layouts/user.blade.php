@@ -62,6 +62,7 @@
     <!-- responsive CSS
     ============================================ -->
     <link rel="stylesheet" href="/user/css/responsive.css">
+    <link href="css/styles.css" rel="stylesheet" />
 
     @yield('custom_css')
 
@@ -106,10 +107,19 @@
     </div>
 </div>--}}
 <!--end header  area -->
-
+<header class="masthead" style="height: 100%;">
+  <div class="container px-4 px-lg-5 h-100">
+    <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center" style="position: relative;">
+      <div class="col-lg-8 align-self-baseline" style="position: absolute;bottom: 0px;">
+        <p class="text-white-75 mb-5">Start Bootstrap can help you build better websites!</p>
+        <a class="btn btn-primary btn-xl _show_record" href="">Записаться</a>
+      </div>
+    </div>
+  </div>
+</header>
 @yield('content')
 
-
+{{--
 <div class="footer_top_area">
     <div class="container">
         <div class="row">
@@ -135,7 +145,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>--}}
 
 <!-- JS -->
 <!-- jquery-1.11.3.min js
