@@ -112,7 +112,7 @@
     <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center" style="position: relative;">
       <div class="col-lg-8 align-self-baseline" style="position: absolute;bottom: 0px;">
         <p class="text-white-75 mb-5">Start Bootstrap can help you build better websites!</p>
-        <a class="btn btn-primary btn-xl _show_record" href="">Записаться</a>
+        <a style="background-color: #ff9c13;border-color: #4c4528;" class="btn btn-primary btn-xl _show_record" href="">Записаться</a>
       </div>
     </div>
   </div>
