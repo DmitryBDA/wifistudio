@@ -3202,3 +3202,9 @@ color:#ffaa31;
     outline: none;
     box-shadow: none!important;
 }
+html {
+  height: 100%!important;
+}
+body {
+  height: 100%!important;
+}

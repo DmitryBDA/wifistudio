@@ -25,7 +25,7 @@
 .curosel-style.client_style.owl-theme .owl-controls .owl-buttons div {
   left: 45%;
   top: 26px;
-} 
+}
 .blog_img.hover_effect.blog_hover img {
   width: 100%;
 }
@@ -99,7 +99,7 @@
 }
 }
 
- 
+
 /* Tablet desktop :768px. */
 @media (min-width: 768px) and (max-width: 991px) {
 .logo {
@@ -285,7 +285,7 @@
 }
 }
 
- 
+
 /* small mobile :320px. */
 @media (max-width: 767px) {
 .container {width:300px}
@@ -722,4 +722,4 @@
   padding-top: 68px;
 }
 }
- 
+

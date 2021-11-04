@@ -124,6 +124,13 @@
 
             calendar.render();
 
+          $('._show_record').on('click', function (event){
+            event.preventDefault()
+            $('.record_main').css('display', 'block');
+            calendar.refetchEvents()
+            $('.masthead').css('display', 'none');
+          })
+
         })
     </script>
 
@@ -133,36 +140,35 @@
 @section('content')
 
 
-
-    <div class="">
-        <div class="container">
-            <div class="row">
-                <!--section title-->
-                <div class="col-md-12 col-sm-12 col-lg-12 title_fon">
-                    <div class="title_record">
-                        Запись на маникюр
-                    </div>
-                </div>
-                <!--end section title-->
-            </div>
-            <div class="row" >
-                <div id="calendar" style="width: 100%;"></div>
-            </div>
+<div class="record_main" style="display: none;">
+  <div class="">
+    <div class="container">
+      <div class="row">
+        <!--section title-->
+        <div class="col-md-12 col-sm-12 col-lg-12 title_fon">
+          <div class="title_record">
+            Запись на маникюр
+          </div>
         </div>
+        <!--end section title-->
+      </div>
+      <div class="row" >
+        <div id="calendar" style="width: 100%;"></div>
+      </div>
     </div>
+  </div>
 
+  <!-- Кнопка, открывающая модальное окно -->
+  <button id="btn_record" style="display: none" type="button" class="btn btn-primary" data-toggle="modal" data-target="#feedbackFormModal">
+    Открыть форму в модальном окне
+  </button>
 
+  <!-- Форма обратной связи в модальном окне -->
+  <div class="modal" id="feedbackFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    @include('user.ajax-elem.formRecord')
+  </div>
+</div>
 
-
-    <!-- Кнопка, открывающая модальное окно -->
-    <button id="btn_record" style="display: none" type="button" class="btn btn-primary" data-toggle="modal" data-target="#feedbackFormModal">
-        Открыть форму в модальном окне
-    </button>
-
-    <!-- Форма обратной связи в модальном окне -->
-    <div class="modal" id="feedbackFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        @include('user.ajax-elem.formRecord')
-    </div>
 
 
 @endsection
