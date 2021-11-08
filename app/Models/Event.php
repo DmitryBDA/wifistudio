@@ -11,7 +11,7 @@ class Event extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title','start','end','status','allDay','user_id', 'service_id'
+        'title','start','end','status','allDay','user_id', 'service_id', 'comment'
     ];
 
     public function setAttr($name, $value)

@@ -69,6 +69,7 @@ class RecordController extends Controller
         $name = $request->dataForm[1]['value'];
         $phone = $request->dataForm[2]['value'];
         $servicesId = $request->dataForm[3]['value'];
+        $comment = $request->dataForm[4]['value'];
 
         if(!empty($name) and !empty($phone)){
             $insertArr = [
@@ -84,6 +85,7 @@ class RecordController extends Controller
                     'status' => 2,
                     'user_id' => $user->id,
                     'service_id' => $servicesId,
+                    'comment' => $comment,
                 ];
 
             } else {
@@ -98,6 +100,7 @@ class RecordController extends Controller
                     'status' => 2,
                     'user_id' => $user->id,
                     'service_id' => $servicesId,
+                    'comment' => $comment,
                 ];
             }
 

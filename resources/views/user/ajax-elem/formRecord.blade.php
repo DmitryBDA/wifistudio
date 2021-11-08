@@ -68,6 +68,13 @@
                         </div>
                     </div>
                     @endif
+                  <div class="col-sm-6">
+                    <!-- textarea -->
+                    <div class="form-group">
+                      <label>Комментарий</label>
+                      <textarea class="form-control" name="comment" rows="3" placeholder="Текст сообщения"></textarea>
+                    </div>
+                  </div>
 
                 </div>
 
