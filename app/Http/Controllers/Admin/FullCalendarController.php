@@ -131,7 +131,7 @@ class FullCalendarController extends Controller
 
         if (!empty($name) and !empty($phone)) {
 
-          $user = UserEvent::select('id')->where('phone', $phone)->first();
+          $user = UserEvent::select('id', 'name', 'surname', 'phone')->where('phone', $phone)->first();
 
 
           if (!empty($user)) {
