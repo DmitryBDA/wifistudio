@@ -11,7 +11,10 @@
     </div>
     <div style="width: 100%;"><label for="">Телефон:
         <span>@if($event->user){{$event->user->phone}} @endif</span></label></div>
-
+    @if(isset($event->comment) and !empty($event->comment))
+    <div style="width: 100%;"><label for="">Комментарий:
+        <span>{{$event->comment}}</span></label></div>
+    @endif
   </div>
 
   @if(isset($moreRecords) and !empty($moreRecords))

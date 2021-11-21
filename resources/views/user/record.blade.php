@@ -94,7 +94,7 @@
                                 var idEent = $('#feedbackForm').attr('data-idevent');
                                 var dataForm = $('#feedbackForm').serializeArray();
 
-
+console.log(dataForm)
 
 
                                   $.ajax({
