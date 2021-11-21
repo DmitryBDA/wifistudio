@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\UserEvent;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\Telegram;
+use Jenssegers\Date\Date;
 
 class FullCalendarController extends Controller
 {
@@ -160,7 +163,20 @@ class FullCalendarController extends Controller
           ];
         }
 
-        $event = Event::find($request->id)->update($dataUpdate);
+
+        $event = Event::find($request->id);
+
+        $event->update($dataUpdate);
+
+        $phone = str_replace(['(', ')', '-'], '', $user->phone);
+        $phone = substr($phone, 1);
+        $name = $user->name;
+        $day = Carbon::create($event->start);
+        $date = Date::parse($day)->format('l j F');
+        $time = str_replace(' ', '+', $date);
+        $time .= "+$event->title";
+
+        Notification::route('telegram', config('config_telegram.TELEGRAM_ADMIN_ID'))->notify(new Telegram($name, $phone, $time ));
 
         return response()->json($name);
         break;
