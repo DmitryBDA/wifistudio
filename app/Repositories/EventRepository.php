@@ -24,6 +24,7 @@ class EventRepository extends CoreRepository
       ->where('start', '>=', $tekDate)
       ->with('user')
       ->orderBy('start', 'asc')
+      ->orderBy('title', 'asc')
       ->get();
     return $eventList;
   }

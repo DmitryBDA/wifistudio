@@ -29,6 +29,28 @@ class FullCalendarController extends Controller
   {
     //Получить все записи (события)
     $eventList = $this->eventRepository->getActiveRecords();
+
+    $arEventList = [];
+    $index = 0;
+    $nowDate = $eventList->first()->start;
+
+    foreach ($eventList as $event){
+
+      if($nowDate !== $event->start){
+        $index = 0;
+      }
+
+      $arEventList[$event->start][$index]['time'] = $event->title;
+      $phone = str_replace(['(', ')', '-'], '', $event->user->phone);
+      $phone = substr($phone, 1);
+      $arEventList[$event->start][$index]['phone'] = $phone;
+      $arEventList[$event->start][$index]['name'] = $event->user->surname . ' ' .$event->user->name ;
+
+      $nowDate = $event->start;
+      $index++;
+    }
+
+    $eventList = $arEventList;
     //Получить все услуги
     $services = $this->servicesRepository->getAll();
 
@@ -270,6 +292,31 @@ class FullCalendarController extends Controller
         $query->where('name', 'LIKE', "%$searchField%")
           ->orWhere('surname', 'LIKE', "%$searchField%");
       })->with('user')->orderBy('start', 'asc')->get();
+
+      $arEventList = [];
+      $index = 0;
+      if($eventList->isNotEmpty()){
+        $nowDate = $eventList->first()->start;
+
+        foreach ($eventList as $event){
+
+          if($nowDate !== $event->start){
+            $index = 0;
+          }
+
+          $arEventList[$event->start][$index]['time'] = $event->title;
+          $phone = str_replace(['(', ')', '-'], '', $event->user->phone);
+          $phone = substr($phone, 1);
+          $arEventList[$event->start][$index]['phone'] = $phone;
+          $arEventList[$event->start][$index]['name'] = $event->user->surname . ' ' .$event->user->name ;
+
+          $nowDate = $event->start;
+          $index++;
+        }
+
+        $eventList = $arEventList;
+      }
+
 
       return view('admin.calendar.ajax-elem.usersActiveList', compact('eventList'))->render();
     }

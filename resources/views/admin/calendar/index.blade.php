@@ -4,6 +4,16 @@
 
 @section('custom_css')
   <link rel="stylesheet" href="/adm/plugins/fullcalendar/main.css">
+  <style>
+    .timeline>div>.timeline-item{
+      margin-left: 0!important;
+      margin-right: 0!important;
+    }
+    .timeline>div{
+      margin-right: 0!important;
+      margin-bottom: 3px!important;
+    }
+  </style>
 @endsection
 
 @section('custom_js')
