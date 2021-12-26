@@ -28,4 +28,16 @@ class EventRepository extends CoreRepository
       ->get();
     return $eventList;
   }
+
+  public function getAllRecords()
+  {
+    $tekDate = Carbon::today()->format('Y-m-d');
+    $eventList = $this->startCondition()
+      ->where('status', '!=', 1)
+      ->with('user')
+      ->orderBy('start', 'asc')
+      ->orderBy('title', 'asc')
+      ->get();
+    return $eventList;
+  }
 }

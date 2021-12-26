@@ -351,4 +351,71 @@ class FullCalendarController extends Controller
       return response()->json('error');
     }
   }
+
+  public function historyRecords(){
+    //Получить все записи (события)
+    $eventList = $this->eventRepository->getAllRecords();
+
+    $arEventList = [];
+    $index = 0;
+    $nowDate = $eventList->first()->start;
+
+    foreach ($eventList as $event){
+
+      if($nowDate !== $event->start){
+        $index = 0;
+      }
+
+      $arEventList[$event->start][$index]['time'] = $event->title;
+      $phone = str_replace(['(', ')', '-'], '', $event->user->phone);
+      $phone = substr($phone, 1);
+      $arEventList[$event->start][$index]['phone'] = $phone;
+      $arEventList[$event->start][$index]['name'] = $event->user->surname . ' ' .$event->user->name ;
+
+      $nowDate = $event->start;
+      $index++;
+    }
+
+    $eventList = $arEventList;
+
+    return view('admin.history.records', compact('eventList'));
+  }
+
+  public function searchUsersHistory(Request $request)
+  {
+    if ($request->ajax()) {
+      $searchField = $request->get('searchFields');
+
+      $eventList = Event::where('status', '!=', 1)->whereHas('user', $filter = function ($query) use ($searchField) {
+        $query->where('name', 'LIKE', "%$searchField%")
+          ->orWhere('surname', 'LIKE', "%$searchField%");
+      })->with('user')->orderBy('start', 'asc')->get();
+
+      $arEventList = [];
+      $index = 0;
+      if($eventList->isNotEmpty()){
+        $nowDate = $eventList->first()->start;
+
+        foreach ($eventList as $event){
+
+          if($nowDate !== $event->start){
+            $index = 0;
+          }
+
+          $arEventList[$event->start][$index]['time'] = $event->title;
+          $phone = str_replace(['(', ')', '-'], '', $event->user->phone);
+          $phone = substr($phone, 1);
+          $arEventList[$event->start][$index]['phone'] = $phone;
+          $arEventList[$event->start][$index]['name'] = $event->user->surname . ' ' .$event->user->name ;
+
+          $nowDate = $event->start;
+          $index++;
+        }
+
+        $eventList = $arEventList;
+      }
+
+      return view('admin.history.ajax-elem.list', compact('eventList'))->render();
+    }
+  }
 }

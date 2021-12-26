@@ -48,6 +48,7 @@ Route::middleware(['role:admin'])->prefix('admin')->group(function () {
     Route::get('/fullcalendar/copy-data', [App\Http\Controllers\Admin\FullCalendarController::class, 'copyEvents']);
 
     Route::get('/fullcalendar/search', [App\Http\Controllers\Admin\FullCalendarController::class, 'searchUsers']);
+    Route::get('/fullcalendar/search-history', [App\Http\Controllers\Admin\FullCalendarController::class, 'searchUsersHistory']);
 
     Route::post('/fullcalendar/create',[App\Http\Controllers\Admin\FullCalendarController::class,'create']);
 
@@ -69,6 +70,7 @@ Route::middleware(['role:admin'])->prefix('admin')->group(function () {
     Route::post('/fullcalendar/search-phone',[App\Http\Controllers\Admin\FullCalendarController::class, 'searchPhone'])->name('search.phone');
 
     Route::get('/finance',[App\Http\Controllers\Admin\FinanceController::class,'finance'])->name('finance');
+    Route::get('/history-records',[App\Http\Controllers\Admin\FullCalendarController::class,'historyRecords'])->name('historyRecords');
 });
 //Notification::route('telegram', '599738652')
 //    ->notify(new Telegram);
